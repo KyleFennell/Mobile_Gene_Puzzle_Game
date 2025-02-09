@@ -7,6 +7,7 @@ extends Container
 @onready var ModifiableChildren = %ModifiableChildren
 
 var item: Item = null
+var tween = create_tween()
 
 func _ready():
 	Identification.texture = Identification.texture.duplicate()
@@ -20,6 +21,7 @@ func update_item_display() -> void:
 	#HiddenItem.get_child(0).texture = ModifiableChildren.get_child(0).texture
 	
 	if self.item == null:
+		tween.kill()
 		hide()
 		Identification.hide()
 		StartingItemTag.hide()
@@ -42,7 +44,7 @@ func update_item_display() -> void:
 		var effects = phenotypes.get("modules", {}).get(module.name, {})
 		module.create_on(ModifiableChildren)
 		module.process_attributes(effects)
-		
+
 	#if item.is_starting_item:
 		#StartingItemTag.show()
 	#

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlgnwrj3yjhgl"]
+
+[ext_resource type="Script" path="res://Grow_Area.gd" id="1_kvwmh"]
+[ext_resource type="Texture2D" uid="uid://ejkidyxoq1dr" path="res://Resources/Flower_single/Tulip.png" id="2_5h1in"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77ysn"]
+size = Vector2(16, 16)
+
+[node name="GrowArea" type="Area2D"]
+script = ExtResource("1_kvwmh")
+
+[node name="Interact_Area" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_77ysn")
+
+[node name="PlantSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("2_5h1in")

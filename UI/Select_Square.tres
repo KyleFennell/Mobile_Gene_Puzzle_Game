@@ -1,0 +1,6 @@
+[gd_resource type="CanvasTexture" load_steps=2 format=3 uid="uid://ccnijfuinhtci"]
+
+[ext_resource type="Texture2D" uid="uid://b8d4m8w1k4b8g" path="res://Resources/Tiles/Select_Square.png" id="1_cmqer"]
+
+[resource]
+diffuse_texture = ExtResource("1_cmqer")
