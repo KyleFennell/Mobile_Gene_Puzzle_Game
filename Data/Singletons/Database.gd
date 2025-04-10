@@ -4,6 +4,7 @@ var Levels = {}
 var Genes = {}
 var Interactions = {}
 var Contracts = {}
+var ResearchContracts = {}
 var Speciess = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -13,6 +14,7 @@ func _ready():
 	#load_file_data("Interactions", Interaction, "Interactions")
 	#load_file_data("Levels", Level, "Levels")
 	load_file_data("Contracts", Contract, "Contracts")
+	load_file_data("Tulip_Unlocks", ResearchContract, "ResearchContracts")
 	
 func load_file_data(data_name, resource_type, member):
 	var my_csharp_script = preload("res://Data/Singletons/YmlToJson.cs")

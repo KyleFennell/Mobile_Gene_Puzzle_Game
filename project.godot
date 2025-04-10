@@ -25,9 +25,7 @@ Events="*res://Data/Singletons/Events.gd"
 
 [display]
 
-window/size/viewport_width=576
 window/stretch/mode="canvas_items"
-window/stretch/scale=2.0
 
 [dotnet]
 

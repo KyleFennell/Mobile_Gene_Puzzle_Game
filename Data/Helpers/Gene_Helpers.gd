@@ -36,11 +36,13 @@ static func _merge_phenotypes(p1: Dictionary, p2: Dictionary):
 	elif "interactions" in p2:
 		p1["interactions"] = p2["interactions"]
 
+
 static func generate_child(p1: Item, p2: Item)-> Item:
 	#generates a random child from two parents mutations included
 	var child = _generate_combo_child(p1, p2)
 	return _generate_genetic_child(p1, p2) if child == null else child
-	
+
+
 static func _generate_genetic_child(p1: Item, p2: Item) -> Item:
 	var child = {"genes": {}}
 	for gene in p1.genes:
@@ -48,6 +50,7 @@ static func _generate_genetic_child(p1: Item, p2: Item) -> Item:
 		child["genes"][gene] = sort_gene(new_gene, p1.species.genome[gene].alleles)
 		child["species"] = p1.species.name
 	return Item.new(child)
+
 
 static func _generate_combo_child(p1: Item, p2: Item) -> Item:
 	# attempts to generate a mutated child.
@@ -66,6 +69,7 @@ static func _generate_combo_child(p1: Item, p2: Item) -> Item:
 			return _create_combo_child(combo)
 	return null
 
+
 static func _create_combo_child(combo: HiddenCombination) -> Item:
 	if not combo.discovered:
 		_discover_alleles_from_genes(combo.child.genes)
@@ -78,6 +82,7 @@ static func _create_combo_child(combo: HiddenCombination) -> Item:
 	combo.discovered = true
 	return combo.child.full_duplicate()
 
+
 static func _discover_alleles_from_genes(genes: Dictionary) -> void:
 	# iterates through all genes and if any of the alleles are hidden
 	# it erases them from the hidden dictionary
@@ -87,6 +92,7 @@ static func _discover_alleles_from_genes(genes: Dictionary) -> void:
 			for allele in genes[gene]:
 				hidden_alleles[gene].erase(allele)
 
+
 class _ChildChancePair:
 	# small private data class for readability
 	var child: Item
@@ -94,6 +100,7 @@ class _ChildChancePair:
 	func _init(_child: Item, _chance: float):
 		self.child = _child
 		self.chance = _chance
+
 
 static func generate_children_with_percentages(p1: Item, p2: Item) -> Array[_ChildChancePair]:
 	# generates all possible children for the 
@@ -119,6 +126,7 @@ static func _get_combo_children(p1, p2) ->Array[_ChildChancePair]:
 			combo_children.append(_ChildChancePair.new(child, combo.chance))
 	return combo_children
 
+
 static func _generate_potential_genes(p1: Item, p2:Item) -> Dictionary:
 	# generate a list of all combinations for each gene 
 	# e.g. parents: Xx Xx -> [XX, Xx, xx]
@@ -134,6 +142,7 @@ static func _generate_potential_genes(p1: Item, p2:Item) -> Dictionary:
 				potential_genes[gene][new_gene_value] = 0.25
 	return potential_genes
 
+
 static func _generate_children_from_genes(potential_genes: Dictionary, species: Species) -> Array[Dictionary]:
 	var children = [{"child": { "genes": {}, "species": species.name}, "chance": 1}]
 	for gene in potential_genes:
@@ -147,6 +156,7 @@ static func _generate_children_from_genes(potential_genes: Dictionary, species: 
 		children = next_children
 	return children
 
+
 static func _convert_children(children: Array[Dictionary]) -> Array[_ChildChancePair]:
 	# convert children from dict to Items
 	var children_items: Array[_ChildChancePair] = []
@@ -158,6 +168,7 @@ static func _convert_children(children: Array[Dictionary]) -> Array[_ChildChance
 			)
 		)
 	return children_items
+
 
 static func generate_phenotype_percents(children: Array[_ChildChancePair]) -> Dictionary:
 	# aggregates all phenotypes from the list of genotypical children
@@ -180,6 +191,7 @@ static func generate_phenotype_percents(children: Array[_ChildChancePair]) -> Di
 			phenotypes[phenotype]["chance"] += child["chance"]
 	return phenotypes
 
+
 static func is_hidden(child: Item) -> bool:
 	# if any allele in the child is hidden return true
 	if Globals.current_level == "Story":
@@ -192,6 +204,7 @@ static func is_hidden(child: Item) -> bool:
 					return true
 	return false
 
+
 static func sort_gene(gene: String, dominance: Array[String]) -> String:
 	# sorts the gene based on the dominance hierarchy array
 	var arr = []
@@ -200,11 +213,13 @@ static func sort_gene(gene: String, dominance: Array[String]) -> String:
 	arr.sort_custom(_get_sorter_by_array(dominance))
 	return "".join(arr)
 
+
 static func _get_sorter_by_array(arr: Array) -> Callable:
 	# returns a comparison function that sorts based on position in an array
 	var f = func (a, b):
 		return arr.find(a) < arr.find(b)
 	return f
+
 
 static func genes_match(g1: Dictionary, g2: Dictionary) -> bool:
 	# checks equivelance accounting for wildcards
@@ -215,10 +230,8 @@ static func genes_match(g1: Dictionary, g2: Dictionary) -> bool:
 			return false
 	return true
 
-static func phenotypes_match(item1: Item, item2: Item) -> bool:
-	var phen1 = get_phenotype(item1.species, item1.genes)
-	var phen2 = get_phenotype(item2.species, item2.genes)
-	
+
+static func phenotypes_match(phen1: Dictionary, phen2: Dictionary) -> bool:
 	var p1_keys: Array = phen1.keys()
 	var p2_keys: Array = phen2.keys()
 	p1_keys.sort()
@@ -233,12 +246,25 @@ static func phenotypes_match(item1: Item, item2: Item) -> bool:
 	
 	return true
 
+
+static func item_satisfies_restrictions(item: Item, restrictions: Dictionary) -> bool:
+	if not genes_match(item.genes, restrictions.get("genes", {})):
+		return false
+
+	var item_phenotype = get_phenotype(item.species, item.genes)
+	var restrictions_phenotype = get_phenotype(restrictions.get("species"), restrictions.get("genes", {}))
+	restrictions_phenotype = _merge_phenotypes(restrictions_phenotype, restrictions.get("modules", {}))
+
+	return phenotypes_match(item_phenotype, restrictions_phenotype)
+	
+
 static func alleles_match(a1: String, a2: String) -> bool:
 	for i in a1.length(): 
 		if a1[i] == "*" or a2[i] == "*" or a1[i] == a2[i]:
 			continue
 		return false
 	return true
+
 
 static func get_raw_genotype(species: Species, genes: Dictionary) -> String:
 	# concatenates all alleles together creating a unique string for the genotype
@@ -247,12 +273,14 @@ static func get_raw_genotype(species: Species, genes: Dictionary) -> String:
 		raw_genotype += genes[gene]
 	return raw_genotype
 
+
 static func get_heterozygous_count(genes: Dictionary) -> int:
 	var count = 0
 	for gene in genes.values():
 		if gene[0] != gene[1]:
 			count += 1
 	return count
+
 
 static func get_heterozygous_count_raw(raw_genotype: String) -> int:
 	var count = 0

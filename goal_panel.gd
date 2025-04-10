@@ -1,0 +1,45 @@
+extends MarginContainer
+
+@onready var ParentsContainer = %ParentsContainer
+@onready var Parent1 = %Parent1
+@onready var Parent2 = %Parent2
+@onready var Sep = %HSeparator
+@onready var Child = %Child
+@onready var MatchPercent = %MatchPercent
+
+var goal_restrictions
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	Parent1.connect("slot_contence_changed", _on_parent_changed)
+	Parent2.connect("slot_contence_changed", _on_parent_changed)
+	
+	
+func set_goal_restrictions(new_goal_restrictions: Dictionary):
+	goal_restrictions = new_goal_restrictions
+	var parent_restrictions = goal_restrictions.get("parents", [])
+	if len(parent_restrictions) == 0:
+		ParentsContainer.hide()
+		Sep.hide()
+	Parent1.set_item_restrictions(parent_restrictions[0])
+	Parent2.set_item_restrictions(parent_restrictions[1])
+	Child.set_item_restrictions(goal_restrictions.get("child"))
+
+
+func _on_parent_changed():
+	if Parent1.has_item() && Parent2.has_item():
+		var child_percents = GeneHelpers.generate_children_with_percentages(Parent1.item, Parent2.item)
+		var percent_match = calculate_percent_of_children_match_restrictions(child_percents, goal_restrictions.get("child"))
+		set_child_percent_label(percent_match)
+	else:
+		set_child_percent_label(0)
+func calculate_percent_of_children_match_restrictions(child_percents: Array[GeneHelpers._ChildChancePair], restrictions: Dictionary) -> float:
+	var percent_match = 0.0
+	for child in child_percents:
+		if GeneHelpers.item_satisfies_restrictions(child.item, restrictions):
+			percent_match += child.chance
+	return percent_match
+
+func set_child_percent_label(percent: float):
+	MatchPercent.value = min(percent/goal_restrictions.get("goal_percent", 100), 100)
+	MatchPercent.child(0).text = "%f.0 / %f/0%" % [percent, goal_restrictions.get("goal_percent", 100)]

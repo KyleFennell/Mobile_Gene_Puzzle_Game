@@ -56,7 +56,7 @@ genome:
       - p
     default: PP
     phenotypes:
-      P*:
+      PP:
         interactions:
           - pigment
   

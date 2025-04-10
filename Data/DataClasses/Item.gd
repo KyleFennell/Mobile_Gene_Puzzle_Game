@@ -41,7 +41,11 @@ func equals(other: Item, idenfied_relevant: bool=false) -> bool:
 func phenotype_equals(other: Item) -> bool:
 	if not other is Item:
 		return false
-	return GeneHelpers.phenotypes_match(self, other)
+	
+	var self_phenotype = GeneHelpers.get_phenotype(self.species, self.genes)
+	var other_phenotype = GeneHelpers.get_phenotype(other.species, other.genes)
+	
+	return GeneHelpers.phenotypes_match(self_phenotype, other_phenotype)
 
 func identify():
 	identified = true

@@ -1,13 +1,14 @@
 extends Node
 
-func element_clicked_event(event, element, sig):
+# usage: req_slot.connect("gui_input", Helpers.element_clicked_event.bind(req_slot, auto_fill_goal))
+func element_clicked_event(event: InputEvent, payload, sig: Signal):
 	#if not slot.has_item():
 		#return
 	if Settings.CLICK_CONTROLS:
 		if event is InputEventMouseButton and event.button_mask == MOUSE_BUTTON_NONE and not event.pressed:
-			sig.emit(element)
+			sig.emit(payload)
 
-func clicked_event(event, element, sig):
+func clicked_event(event: InputEvent, element, sig: Signal):
 	if Settings.CLICK_CONTROLS:
 		if event is InputEventMouseButton and event.button_mask == MOUSE_BUTTON_NONE and not event.pressed:
 			sig.emit()

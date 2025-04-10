@@ -2,6 +2,7 @@ extends Container
 class_name ItemSlot
 
 @onready var BackgroundTexture = %BackgroundTexture
+@onready var RestrictionsTexture = %RestrictionsTexture
 @onready var ItemDisplay = %ItemDisplay
 
 @export var dragable: bool = true
@@ -9,6 +10,7 @@ class_name ItemSlot
 
 signal slot_contence_changed
 var item: Item = null
+var item_restrictions: Dictionary = {}
 
 func _ready():
 	if item == null:
@@ -21,6 +23,8 @@ func set_item(_item: Item) -> void:
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if item != null:
+		return data["previous_slot"].dropable
+	if not GeneHelpers.item_satisfies_restrictions(data.item, item_restrictions):
 		return data["previous_slot"].dropable
 	return dropable
 

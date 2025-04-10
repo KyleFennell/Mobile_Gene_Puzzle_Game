@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmxtpbm5ynmef"]
+
+[ext_resource type="Script" path="res://breeding_panel.gd" id="1_5fbk2"]
+[ext_resource type="PackedScene" uid="uid://bdm8heeojuy7h" path="res://UI/Common/ItemSlot.tscn" id="2_ng0r8"]
+[ext_resource type="PackedScene" uid="uid://cc3evauixtx3l" path="res://UI/Common/ProgressArrow.tscn" id="3_143gy"]
+
+[node name="BreedingPanel" type="MarginContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_5fbk2")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Parent1" parent="Panel/VBoxContainer/HBoxContainer" instance=ExtResource("2_ng0r8")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Parent2" parent="Panel/VBoxContainer/HBoxContainer" instance=ExtResource("2_ng0r8")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ProgressBar" parent="Panel/VBoxContainer/HBoxContainer" instance=ExtResource("3_143gy")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Children" type="HBoxContainer" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Child1" parent="Panel/VBoxContainer/Children" instance=ExtResource("2_ng0r8")]
+layout_mode = 2
+
+[node name="Child2" parent="Panel/VBoxContainer/Children" instance=ExtResource("2_ng0r8")]
+layout_mode = 2
+
+[node name="Child3" parent="Panel/VBoxContainer/Children" instance=ExtResource("2_ng0r8")]
+layout_mode = 2
+
+[node name="Child4" parent="Panel/VBoxContainer/Children" instance=ExtResource("2_ng0r8")]
+layout_mode = 2

@@ -1,0 +1,190 @@
+- name: Red_Tulip
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: RR
+  goal_flowers:
+    - child:
+        species: tulip
+        genes:
+          colour: RR
+      goal_percent: 100
+
+- name: Yellow_Tulip
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: Ry
+  goal_flowers:
+    - child:
+        species: tulip
+        genes:
+          colour: yy
+      goal_percent: 100
+
+- name: Orange_Tulip
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour: Ry
+  goal_flowers:
+    - child:
+        species: tulip
+        genes:
+          colour: Ry
+      goal_percent: 100
+
+- name: Blue_Tulip
+  requirements:
+    - Yellow_Tulip
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: Ry
+    - species: tulip
+      genes:
+        colour_1: yy
+  goal_flowers:
+    - child:
+        species: tulip
+        genes:
+          colour_1: bb
+          pigment: PP
+      goal_percent: 100
+
+- name: Tulip_Trim
+  requirements:
+    - Blue_Tulip
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: RR
+        trim: TT
+        trim_saturation: HH
+      genes:
+        colour_1: yy
+        trim: tt
+        trim_saturation: HH
+  goal_flowers:
+    - child:
+        species: tulip
+        genes:
+          colour_1: RR
+          trim: tt
+      goal_percent: 100
+
+- name: Tulip_Trim_Saturation
+  requirements:
+    - Tulip_Trim
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: RR
+        trim: TT
+        trim_saturation: HH
+      genes:
+        colour_1: RR
+        trim: tt
+        trim_saturation: LL
+  goal_flowers:
+    - child:
+        species: tulip
+        genes:
+          colour_1: RR
+          trim: TT
+          trim_saturation: LL
+      goal_percent: 100
+
+- name: Tulip_Lineage
+  requirements:
+    - Blue_Tulip
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: Ry
+    - species: tulip
+      genes:
+        colour_1: yb
+  goal_flowers:
+    - parents:
+        - species: tulip
+          genes:
+            colour_1: R*
+        - species: tulip
+          genes:
+            colour-1: y*
+      child:
+        species: tulip
+        genes:
+          colour_1: bb
+      goal_percent: 50
+
+- name: Tulip_Pigment
+  requirements:
+    - Tulip_Lineage
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: RR
+        pigment: PP
+    - species: tulip
+      genes:
+        colour_1: Ry
+        pigment: pp
+  goal_flowers:
+    - parents:
+        - modules:
+            base_texture:
+              sub_texture: !!int 3
+          genes:
+            pigment: '*p'
+        - modules:
+            base_texture:
+              sub_texture: !!int 3
+          genes:
+            pigment: '*p'
+      child:
+        species: tulip
+        genes:
+          colour_1: yy
+          pigment: P*
+      goal_percent: 50
+
+- name:  Special_White_and_Blue
+  requirements:
+    - Tulip_Pigment
+    - Tulip_Trim_Saturation
+  starting_flowers:
+    - species: tulip
+      genes:
+        colour_1: Ry
+        pigment: PP
+        trim: tt
+        trim_saturation: LL
+    - species: tulip
+      genes:
+        colour_1: Rb
+        pigment: PP
+        trim: TT
+        trim_saturation: LL
+    - species: tulip
+      genes:
+        colour_1: RR
+        pigment: pp
+        trim: TT
+        trim_saturation: LL
+  goal_flowers:
+    - parents:
+        - species: tulip
+          genes:
+            colour_1: bb
+            pigment: PP
+        - species: tulip
+          genes:
+            pigment: pp
+      child:
+        species: tulip
+        genes:
+          colour_1: yy
+          pigment: P*
+      goal_percent: 50
