@@ -10,14 +10,14 @@ var completed: bool = false
 signal contract_complete
 
 class ResearchContractGoal:
-	var parents: Array[ResearchContractGoalParent] = []
-	var child: Item
+	var parents: Array[GoalRestrictions] = []
+	var child: GoalRestrictions
 	var goal_percent: float
 
 	func _init(research_contract: Dictionary):
 		for parent in research_contract.get("parents", []):
-			parents.append(ResearchContractGoalParent.new(parent))
-		child = Item.new(research_contract.get("child"))
+			parents.append(GoalRestrictions.new(parent))
+		child = GoalRestrictions.new(research_contract.get("child"))
 		goal_percent = float(research_contract.get("goal_percent"))
 
 func _init(research_contract: Dictionary):
@@ -31,7 +31,7 @@ func _init(research_contract: Dictionary):
 		goal_flowers.append(ResearchContractGoal.new(goal_flower))
 
 
-class ResearchContractGoalParent:
+class GoalRestrictions:
 	var modules: Dictionary
 	var species: Species
 	var genes: Dictionary

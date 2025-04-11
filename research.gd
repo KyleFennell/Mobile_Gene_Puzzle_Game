@@ -5,8 +5,10 @@ signal research_contract_clicked
 func _ready() -> void:
 	for contract in Database.ResearchContracts.values():
 		var label = Label.new()
+		label.mouse_filter = Control.MOUSE_FILTER_PASS
 		label.text = contract.name
-		label.bind("gui_input", Helpers.element_clicked_event.bind(contract.name, research_contract_clicked))
+		label.gui_input.connect(print)
+		label.gui_input.connect(Helpers.element_clicked_event.bind(contract.name, research_contract_clicked))
 		self.add_child(label)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

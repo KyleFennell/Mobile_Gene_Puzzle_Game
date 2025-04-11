@@ -247,13 +247,13 @@ static func phenotypes_match(phen1: Dictionary, phen2: Dictionary) -> bool:
 	return true
 
 
-static func item_satisfies_restrictions(item: Item, restrictions: Dictionary) -> bool:
-	if not genes_match(item.genes, restrictions.get("genes", {})):
+static func item_satisfies_restrictions(item: Item, restrictions: ResearchContract.GoalRestrictions) -> bool:
+	if not genes_match(item.genes, restrictions.genes):
 		return false
 
 	var item_phenotype = get_phenotype(item.species, item.genes)
-	var restrictions_phenotype = get_phenotype(restrictions.get("species"), restrictions.get("genes", {}))
-	restrictions_phenotype = _merge_phenotypes(restrictions_phenotype, restrictions.get("modules", {}))
+	var restrictions_phenotype = get_phenotype(restrictions.species, restrictions.genes)
+	restrictions_phenotype = _merge_phenotypes(restrictions_phenotype, restrictions.modules)
 
 	return phenotypes_match(item_phenotype, restrictions_phenotype)
 	

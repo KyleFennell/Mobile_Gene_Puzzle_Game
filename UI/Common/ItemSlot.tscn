@@ -24,4 +24,5 @@ stretch_mode = 4
 
 [node name="ItemDisplay" parent="AspectRatioContainer" instance=ExtResource("3_37ehm")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2

@@ -7,10 +7,11 @@ class_name ItemSlot
 
 @export var dragable: bool = true
 @export var dropable: bool = true
+@export var infinite: bool = false
 
 signal slot_contence_changed
 var item: Item = null
-var item_restrictions: Dictionary = {}
+var item_restrictions: ResearchContract.GoalRestrictions
 
 func _ready():
 	if item == null:
@@ -61,6 +62,8 @@ func potential_drop(data: Variant):
 	ItemDisplay.show()
 
 func successful_drop(new_item: Variant):
+	if self.infinite:
+		return
 	set_item(new_item)
 	
 func create_drag_preview():

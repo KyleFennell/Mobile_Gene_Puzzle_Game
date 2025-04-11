@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0uecadtk25df"]
+
+[ext_resource type="Script" path="res://starting_seeds.gd" id="1_mnt4p"]
+
+[node name="StartingSeedsPanel" type="MarginContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_mnt4p")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="StartingSeeds" type="HBoxContainer" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
