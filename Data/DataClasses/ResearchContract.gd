@@ -40,3 +40,9 @@ class GoalRestrictions:
 		modules = dict.get("modules", {})
 		species = Database.Speciess.get(dict.get("species"))
 		genes = dict.get("genes", {})
+	
+	func _to_string() -> String:
+		var st = "Species: %s" % species.name
+		for gene in genes:
+			st += "\n%s: %s" % [gene, genes[gene]]
+		return st

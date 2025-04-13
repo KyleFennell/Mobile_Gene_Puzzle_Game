@@ -12,3 +12,7 @@ func set_starting_flowers(starting_flowers: Array[Item]):
 		slot.set_item(starting_flower)
 		slot.infinite = true
 		slot.dropable = false
+
+func reset():
+	for child in StartingSeeds.get_children():
+		child.queue_free()

@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://6h7mr2jfcvtw"]
+[gd_scene load_steps=5 format=3 uid="uid://6h7mr2jfcvtw"]
 
-[ext_resource type="Script" path="res://UI/Common/ItemSlot.gd" id="1_te84j"]
+[ext_resource type="Script" path="res://UI/Common/goal_parent_slot.gd" id="1_40m86"]
 [ext_resource type="Texture2D" uid="uid://c7te5fnjbuoga" path="res://Resources/UI/Empty_Slot.png" id="2_lokf1"]
 [ext_resource type="PackedScene" uid="uid://bvd0t6ahgdtt5" path="res://UI/Common/ItemDisplay.tscn" id="3_3s82n"]
+[ext_resource type="PackedScene" uid="uid://c6ljjedqykbk4" path="res://UI/Common/RestrictionsDisplay.tscn" id="3_ob4dp"]
 
 [node name="ItemSlot" type="MarginContainer"]
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
-script = ExtResource("1_te84j")
+script = ExtResource("1_40m86")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 layout_mode = 2
@@ -22,15 +23,11 @@ size_flags_vertical = 3
 texture = ExtResource("2_lokf1")
 stretch_mode = 4
 
-[node name="RestrictionsTexture" type="TextureRect" parent="AspectRatioContainer"]
+[node name="RestrictionsDisplay" parent="AspectRatioContainer" instance=ExtResource("3_ob4dp")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("2_lokf1")
-stretch_mode = 4
 
 [node name="ItemDisplay" parent="AspectRatioContainer" instance=ExtResource("3_3s82n")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2

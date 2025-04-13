@@ -12,7 +12,7 @@ var tween = create_tween()
 func _ready():
 	Identification.texture = Identification.texture.duplicate()
 	Events.allele_discovered.connect(update_item_display)
-	
+
 func update_item_display() -> void:
 	# update the textures and tags based on self.item
 	for child in ModifiableChildren.get_children():

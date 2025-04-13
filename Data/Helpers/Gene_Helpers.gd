@@ -9,33 +9,38 @@ static func get_phenotype(species: Species, genes: Dictionary):
 		var phenotypes = species.genome[gene].phenotypes
 		for phenotype in phenotypes:
 			if alleles_match(phenotype, genes[gene]):
-				_merge_phenotypes(matching_phenotypes, phenotypes[phenotype].duplicate(true))
+				matching_phenotypes = _merge_phenotypes(matching_phenotypes, phenotypes[phenotype].duplicate(true))
 				break;
 	
 	for interaction in species.interactions:
 		var results = interaction.process_interaction(matching_phenotypes.get("interactions", []))
-		_merge_phenotypes(matching_phenotypes, results)
+		matching_phenotypes = _merge_phenotypes(matching_phenotypes, results)
 	
 	return matching_phenotypes
 
-static func _merge_phenotypes(p1: Dictionary, p2: Dictionary):
+static func _merge_phenotypes(p1: Dictionary, p2: Dictionary) -> Dictionary:
 	# merge modules dictionary
+	var new_phenotypes = p1.duplicate(true)
 	if "modules" in p1 and "modules" in p2:
-		p1["modules"].merge(p2["modules"])
+		new_phenotypes["modules"].merge(p2["modules"])
 		for module in p2["modules"]:
 			#overwrite existing values
-			p1["modules"][module].merge(p2["modules"][module], true)
+			new_phenotypes["modules"][module].merge(p2["modules"][module], true)
+	elif "modules" in p1:
+		new_phenotypes["modules"] = p1["modules"]
 	elif "modules" in p2:
-		p1["modules"] = p2["modules"]
+		new_phenotypes["modules"] = p2["modules"]
 	# merge new uniqu interactions into array
 	if "interactions" in p1 and "interactions" in p2:
 		#p1["interactions"].append_array(p2["interactions"])
 		for i in p2["interactions"]:
 			if not i in p1["interactions"]:
-				p1["interactions"].append(i)
+				new_phenotypes["interactions"].append(i)
+	elif "interactions" in p1:
+		new_phenotypes["interactions"] = p1["interactions"]
 	elif "interactions" in p2:
-		p1["interactions"] = p2["interactions"]
-
+		new_phenotypes["interactions"] = p2["interactions"]
+	return new_phenotypes
 
 static func generate_child(p1: Item, p2: Item)-> Item:
 	#generates a random child from two parents mutations included
@@ -248,9 +253,6 @@ static func phenotypes_match(phen1: Dictionary, phen2: Dictionary) -> bool:
 
 
 static func item_satisfies_restrictions(item: Item, restrictions: ResearchContract.GoalRestrictions) -> bool:
-	if not genes_match(item.genes, restrictions.genes):
-		return false
-
 	var item_phenotype = get_phenotype(item.species, item.genes)
 	var restrictions_phenotype = get_phenotype(restrictions.species, restrictions.genes)
 	restrictions_phenotype = _merge_phenotypes(restrictions_phenotype, restrictions.modules)

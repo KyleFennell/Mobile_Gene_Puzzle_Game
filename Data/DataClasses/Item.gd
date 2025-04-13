@@ -16,6 +16,7 @@ func _init(dict, is_identified=false, starting_item=false):
 	self.is_starting_item = starting_item
 	if self.species != null:
 		fill_default_genes()
+	#TODO: This shouldn't be storign the whole module. Should look it up form the DB
 	for module in species.modules:
 		modules.append(SpeciesModules.get_module(module["kind"]).new(module, modules))
 
@@ -50,3 +51,10 @@ func phenotype_equals(other: Item) -> bool:
 func identify():
 	identified = true
 	species.identify(genes)
+
+func _to_string() -> String:
+	var st = ""
+	st += "Species: %s" % species.name
+	for gene in genes:
+		st += "\n%s: %s" % [gene, genes[gene]]
+	return st

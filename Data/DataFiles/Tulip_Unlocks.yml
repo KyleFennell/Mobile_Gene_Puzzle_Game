@@ -7,7 +7,7 @@
     - child:
         species: tulip
         genes:
-          colour: RR
+          colour_1: RR
       goal_percent: 100
 
 - name: Yellow_Tulip
@@ -19,19 +19,19 @@
     - child:
         species: tulip
         genes:
-          colour: yy
+          colour_1: yy
       goal_percent: 100
 
 - name: Orange_Tulip
   starting_flowers:
     - species: tulip
       genes:
-        colour: Ry
+        colour_1: Ry
   goal_flowers:
     - child:
         species: tulip
         genes:
-          colour: Ry
+          colour_1: Ry
       goal_percent: 100
 
 - name: Blue_Tulip
@@ -43,7 +43,7 @@
         colour_1: Ry
     - species: tulip
       genes:
-        colour_1: yy
+        colour_1: yb
   goal_flowers:
     - child:
         species: tulip
@@ -61,6 +61,7 @@
         colour_1: RR
         trim: TT
         trim_saturation: HH
+    - species: tulip
       genes:
         colour_1: yy
         trim: tt
@@ -82,6 +83,7 @@
         colour_1: RR
         trim: TT
         trim_saturation: HH
+    - species: tulip
       genes:
         colour_1: RR
         trim: tt
@@ -110,9 +112,15 @@
         - species: tulip
           genes:
             colour_1: R*
+          modules:
+            base_texture:
+              sub_texture: !!int 0
         - species: tulip
           genes:
-            colour-1: y*
+            colour_1: y*
+          modules:
+            base_texture:
+              sub_texture: !!int 1
       child:
         species: tulip
         genes:
@@ -125,20 +133,22 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: RR
+        colour_1: Ry
         pigment: PP
     - species: tulip
       genes:
-        colour_1: Ry
+        colour_1: RR
         pigment: pp
   goal_flowers:
     - parents:
-        - modules:
+        - species: tulip
+          modules:
             base_texture:
               sub_texture: !!int 3
           genes:
             pigment: '*p'
-        - modules:
+        - species: tulip
+          modules:
             base_texture:
               sub_texture: !!int 3
           genes:
@@ -146,9 +156,9 @@
       child:
         species: tulip
         genes:
-          colour_1: yy
+          colour_1: Ry
           pigment: P*
-      goal_percent: 50
+      goal_percent: 25
 
 - name:  Special_White_and_Blue
   requirements:

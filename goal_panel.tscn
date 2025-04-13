@@ -1,45 +1,55 @@
 [gd_scene load_steps=3 format=3 uid="uid://c0vq16xgfddtr"]
 
 [ext_resource type="Script" path="res://goal_panel.gd" id="1_3m36x"]
-[ext_resource type="PackedScene" uid="uid://bdm8heeojuy7h" path="res://UI/Common/ItemSlot.tscn" id="1_8u172"]
+[ext_resource type="PackedScene" uid="uid://6h7mr2jfcvtw" path="res://UI/Common/GoalParentSlot.tscn" id="2_fj5ri"]
 
 [node name="GoalPanel" type="MarginContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_3m36x")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
 
-[node name="ParentsContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Goal"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ParentsContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Parent1" parent="VBoxContainer/ParentsContainer" instance=ExtResource("1_8u172")]
+[node name="Parent1" parent="Panel/VBoxContainer/ParentsContainer" instance=ExtResource("2_fj5ri")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Parent2" parent="VBoxContainer/ParentsContainer" instance=ExtResource("1_8u172")]
+[node name="Parent2" parent="Panel/VBoxContainer/ParentsContainer" instance=ExtResource("2_fj5ri")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Children" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Children" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Child" parent="VBoxContainer/Children" instance=ExtResource("1_8u172")]
+[node name="Child" parent="Panel/VBoxContainer/Children" instance=ExtResource("2_fj5ri")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MatchPercent" type="ProgressBar" parent="VBoxContainer/Children"]
+[node name="MatchPercent" type="Label" parent="Panel/VBoxContainer/Children"]
 unique_name_in_owner = true
 layout_mode = 2
-show_percentage = false
-
-[node name="Label" type="Label" parent="VBoxContainer/Children/MatchPercent"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+size_flags_horizontal = 3
+text = "0%"

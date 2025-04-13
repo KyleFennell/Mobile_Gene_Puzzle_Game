@@ -7,7 +7,6 @@ func _ready() -> void:
 		var label = Label.new()
 		label.mouse_filter = Control.MOUSE_FILTER_PASS
 		label.text = contract.name
-		label.gui_input.connect(print)
 		label.gui_input.connect(Helpers.element_clicked_event.bind(contract.name, research_contract_clicked))
 		self.add_child(label)
 

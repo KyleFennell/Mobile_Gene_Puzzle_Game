@@ -2,7 +2,6 @@ extends Node
 
 # usage: req_slot.connect("gui_input", Helpers.element_clicked_event.bind(req_slot, auto_fill_goal))
 func element_clicked_event(event: InputEvent, payload, sig: Signal):
-	print(payload, sig.get_name())
 	#if not slot.has_item():
 		#return
 	if Settings.CLICK_CONTROLS:

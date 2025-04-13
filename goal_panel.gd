@@ -15,23 +15,25 @@ func _ready() -> void:
 	Parent1.connect("slot_contence_changed", _on_parent_changed)
 	Parent2.connect("slot_contence_changed", _on_parent_changed)
 	
-	
 func set_goal_restrictions(new_goal_restrictions: ResearchContract.ResearchContractGoal):
 	goal_restrictions = new_goal_restrictions
 	var parent_restrictions = goal_restrictions.parents
 	if len(parent_restrictions) == 0:
 		ParentsContainer.hide()
 		Sep.hide()
+		MatchPercent.hide()
+
 	else:
 		Parent1.set_item_restrictions(parent_restrictions[0])
 		Parent2.set_item_restrictions(parent_restrictions[1])
 	Child.set_item_restrictions(goal_restrictions.child)
+	set_child_percent_label(0)
 
 
 func _on_parent_changed():
 	if Parent1.has_item() && Parent2.has_item():
 		var child_percents = GeneHelpers.generate_children_with_percentages(Parent1.item, Parent2.item)
-		var percent_match = calculate_percent_of_children_match_restrictions(child_percents, goal_restrictions.child)
+		var percent_match = calculate_percent_of_children_match_restrictions(child_percents, goal_restrictions.child) * 100
 		set_child_percent_label(percent_match)
 		if percent_match >= goal_restrictions.goal_percent:
 			print("Valid parent combination found")
@@ -42,11 +44,11 @@ func _on_parent_changed():
 func calculate_percent_of_children_match_restrictions(child_percents: Array[GeneHelpers._ChildChancePair], restrictions: ResearchContract.GoalRestrictions) -> float:
 	var percent_match = 0.0
 	for child in child_percents:
-		if GeneHelpers.item_satisfies_restrictions(child.item, restrictions):
+		if GeneHelpers.item_satisfies_restrictions(child.child, restrictions):
 			percent_match += child.chance
 	return percent_match
 
 
 func set_child_percent_label(percent: float):
-	MatchPercent.value = min(percent/goal_restrictions.goal_percent, 100)
-	MatchPercent.child(0).text = "%f.0 / %f/0%" % [percent, goal_restrictions.goal_percent]
+	var formatted_text = "%.2f / %.2f%%" % [percent, goal_restrictions.goal_percent]
+	MatchPercent.text = formatted_text

@@ -97,4 +97,3 @@ func on_tab_changed(tab):
 func on_goal_auto_fill(goal_slot: GoalSlot):
 	if (Inventory.delete_item(goal_slot.target_item)):
 		goal_slot.set_item(goal_slot.target_item)
-

@@ -2,7 +2,6 @@ extends Container
 class_name ItemSlot
 
 @onready var BackgroundTexture = %BackgroundTexture
-@onready var RestrictionsTexture = %RestrictionsTexture
 @onready var ItemDisplay = %ItemDisplay
 
 @export var dragable: bool = true
@@ -11,21 +10,26 @@ class_name ItemSlot
 
 signal slot_contence_changed
 var item: Item = null
-var item_restrictions: ResearchContract.GoalRestrictions
 
 func _ready():
 	if item == null:
 		ItemDisplay.hide()
+	gui_input.connect(_on_gui_input)
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_mask == MOUSE_BUTTON_RIGHT and event.pressed:
+		if not infinite:
+			set_item(null)
 
 func set_item(_item: Item) -> void:
 	self.item = _item
 	ItemDisplay.set_item(item)
 	emit_signal("slot_contence_changed")
+	if item:
+		tooltip_text = "---Restrictions---\n" + item._to_string()
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if item != null:
-		return data["previous_slot"].dropable
-	if not GeneHelpers.item_satisfies_restrictions(data.item, item_restrictions):
 		return data["previous_slot"].dropable
 	return dropable
 
@@ -53,11 +57,15 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 		
 		var drag_data = {"item": item, "previous_slot": self}
 		Globals.current_drag = drag_data
-	
 		return drag_data
-	
 	return null
-	
+
+func _make_custom_tooltip(for_text: String) -> Object:
+	print("making custom tooltip", str(item))
+	var label = Label.new()
+	label.text = str(item)
+	return label
+
 func potential_drop(data: Variant):
 	ItemDisplay.show()
 

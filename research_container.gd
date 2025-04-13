@@ -17,8 +17,7 @@ func _process(delta: float) -> void:
 
 func reset():
 	research_contract = null
-	for child in StartingSeedsPanel.get_children():
-		child.queue_free()
+	StartingSeedsPanel.reset()
 	for child in GoalsRow.get_children():
 		child.queue_free()
 

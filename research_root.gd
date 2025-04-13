@@ -9,4 +9,5 @@ func _ready() -> void:
 	
 func on_research_contract_clicked(research_contract_name: String):
 	var research_contract = Database.ResearchContracts.get(research_contract_name)
+	ResearchContainer.reset()
 	ResearchContainer.set_research_contract(research_contract)

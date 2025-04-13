@@ -36,7 +36,7 @@ func breeding_finished():
 		stop_breeding()
 		return
 	var child_slot = get_free_child()
-	var child_item = GeneHelpers.generate_child(Parent1.get_item(), Parent2.get_item())
+	var child_item = GeneHelpers.generate_child(Parent1.item, Parent2.item)
 	child_slot.set_item(child_item)
 	start_breeding()
 
