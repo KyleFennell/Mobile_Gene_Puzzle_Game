@@ -30,6 +30,11 @@ func set_goal_restrictions(new_goal_restrictions: ResearchContract.ResearchContr
 	set_child_percent_label(0)
 
 
+func update_tooltips(tooltip_data: Dictionary):
+	Parent1.update_tooltips(tooltip_data)
+	Parent2.update_tooltips(tooltip_data)
+	Child.update_tooltips(tooltip_data)
+
 func _on_parent_changed():
 	if Parent1.has_item() && Parent2.has_item():
 		var child_percents = GeneHelpers.generate_children_with_percentages(Parent1.item, Parent2.item)

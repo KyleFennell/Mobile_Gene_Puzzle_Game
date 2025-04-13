@@ -7,11 +7,14 @@ extends Container
 @onready var ModifiableChildren = %ModifiableChildren
 
 var restrictions: ResearchContract.GoalRestrictions = null
+var tooltip_data: Dictionary = {}
 
 func set_restrictions(_restrictions):
 	restrictions = _restrictions
 	update_restrictions_display()
-	tooltip_text = "Restrictions: " + restrictions._to_string()
+		
+func update_tooltips(tooltip_data):
+	self.tooltip_data = tooltip_data
 
 func update_restrictions_display() -> void:
 	for child in ModifiableChildren.get_children():

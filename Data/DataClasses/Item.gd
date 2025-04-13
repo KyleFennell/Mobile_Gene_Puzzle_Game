@@ -52,6 +52,13 @@ func identify():
 	identified = true
 	species.identify(genes)
 
+func get_tooltip(tooltip_data: Dictionary):
+	var st = ""
+	st += "Species: %s" % species.name
+	for gene in tooltip_data.get("known_genes", genes):
+		st += "\n\t%s: %s" % [gene, genes[gene]]
+	return st + ""
+
 func _to_string() -> String:
 	var st = ""
 	st += "Species: %s" % species.name

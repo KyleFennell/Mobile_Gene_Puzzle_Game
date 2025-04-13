@@ -16,3 +16,7 @@ func set_starting_flowers(starting_flowers: Array[Item]):
 func reset():
 	for child in StartingSeeds.get_children():
 		child.queue_free()
+
+func update_tooltips(tooltip_data: Dictionary):
+	for child in StartingSeeds.get_children():
+		child.update_tooltips(tooltip_data)

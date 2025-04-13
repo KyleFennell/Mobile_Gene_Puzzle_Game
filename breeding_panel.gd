@@ -12,6 +12,8 @@ func _ready() -> void:
 	Parent1.connect("slot_contence_changed", _parent_changed)
 	Parent2.connect("slot_contence_changed", _parent_changed)
 	Progress.connect("timeout", breeding_finished)
+	for child in Children.get_children():
+		child.slot_contence_changed.connect(_child_changed)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -22,6 +24,22 @@ func _parent_changed():
 		start_breeding()
 	else:
 		stop_breeding()
+
+func _child_changed():
+	_parent_changed()
+
+func reset():
+	Parent1.set_item(null)
+	Parent2.set_item(null)
+	for child in Children.get_children():
+		child.set_item(null)
+	stop_breeding()
+	
+func update_tooltips(tooltip_data: Dictionary):
+	Parent1.update_tooltips(tooltip_data)
+	Parent2.update_tooltips(tooltip_data)
+	for child in Children.get_children():
+		child.update_tooltips(tooltip_data)
 
 func start_breeding():
 	if not has_free_child():

@@ -12,6 +12,7 @@ class_name RestrictedItemSlot
 signal slot_contence_changed
 var item: Item = null
 var item_restrictions: ResearchContract.GoalRestrictions
+var tooltip_data: Dictionary = {}
 
 func _ready():
 	if item == null:
@@ -21,6 +22,7 @@ func set_item(_item: Item) -> void:
 	self.item = _item
 	ItemDisplay.set_item(item)
 	emit_signal("slot_contence_changed")
+	update_tooltip_text()
 
 func set_item_restrictions(_restrictions: ResearchContract.GoalRestrictions):
 	item_restrictions = _restrictions
@@ -28,6 +30,18 @@ func set_item_restrictions(_restrictions: ResearchContract.GoalRestrictions):
 
 func update_restrictions():
 	RestrictionsDisplay.set_restrictions(item_restrictions)
+	update_tooltip_text()
+
+func update_tooltips(tooltip_data: Dictionary):
+	self.tooltip_data = tooltip_data
+	update_tooltip_text()
+
+func update_tooltip_text():
+	var tooltip = "---Restrictions---"
+	tooltip += "\n" + ("None" if not item_restrictions else item_restrictions.get_tooltip(tooltip_data))
+	tooltip += "\n---Item---"
+	tooltip += "\n" + ("None" if not item else item.get_tooltip(tooltip_data))
+	tooltip_text = tooltip
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if item != null:
@@ -56,12 +70,9 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	if dragable and item != null:
 		create_drag_preview()
 		ItemDisplay.hide()
-		
 		var drag_data = {"item": item, "previous_slot": self}
 		Globals.current_drag = drag_data
-	
 		return drag_data
-	
 	return null
 	
 func potential_drop(data: Variant):

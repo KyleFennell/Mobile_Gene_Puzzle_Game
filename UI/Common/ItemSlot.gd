@@ -10,6 +10,7 @@ class_name ItemSlot
 
 signal slot_contence_changed
 var item: Item = null
+var tooltip_data: Dictionary = {}
 
 func _ready():
 	if item == null:
@@ -26,7 +27,11 @@ func set_item(_item: Item) -> void:
 	ItemDisplay.set_item(item)
 	emit_signal("slot_contence_changed")
 	if item:
-		tooltip_text = "---Restrictions---\n" + item._to_string()
+		tooltip_text = item.get_tooltip(tooltip_data)
+
+func update_tooltips(tooltip_data: Dictionary):
+	self.tooltip_data = tooltip_data
+	if item: tooltip_text = item.get_tooltip(tooltip_data)
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if item != null:
@@ -59,12 +64,6 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 		Globals.current_drag = drag_data
 		return drag_data
 	return null
-
-func _make_custom_tooltip(for_text: String) -> Object:
-	print("making custom tooltip", str(item))
-	var label = Label.new()
-	label.text = str(item)
-	return label
 
 func potential_drop(data: Variant):
 	ItemDisplay.show()

@@ -1,6 +1,7 @@
 extends MarginContainer
 
 @onready var GoalsRow = %GoalsRow
+@onready var Breeders = %Breeders
 @onready var StartingSeedsPanel = %StartingSeedsPanel
 
 var s_GoalPanel = preload("res://goal_panel.tscn")
@@ -19,7 +20,8 @@ func reset():
 	research_contract = null
 	StartingSeedsPanel.reset()
 	for child in GoalsRow.get_children():
-		child.queue_free()
+		child.free()
+	update_tooltips({})
 
 func set_research_contract(new_research_contract):
 	research_contract = new_research_contract
@@ -28,3 +30,11 @@ func set_research_contract(new_research_contract):
 		var goal_slot = s_GoalPanel.instantiate()
 		GoalsRow.add_child(goal_slot)
 		goal_slot.set_goal_restrictions(goal)
+	update_tooltips(research_contract.tooltip_data)
+	
+func update_tooltips(tooltip_data: Dictionary):
+	StartingSeedsPanel.update_tooltips(tooltip_data)
+	for breeder in Breeders.get_children():
+		breeder.update_tooltips(tooltip_data)
+	for goal in GoalsRow.get_children():
+		goal.update_tooltips(tooltip_data)

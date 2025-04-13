@@ -1,4 +1,7 @@
 - name: Red_Tulip
+  tooltip_data:
+    known_genes:
+      - colour_1
   starting_flowers:
     - species: tulip
       genes:
@@ -8,9 +11,13 @@
         species: tulip
         genes:
           colour_1: RR
+          pigment: PP
       goal_percent: 100
 
 - name: Yellow_Tulip
+  tooltip_data:
+    known_genes:
+      - colour_1
   starting_flowers:
     - species: tulip
       genes:
@@ -20,9 +27,13 @@
         species: tulip
         genes:
           colour_1: yy
+          pigment: PP
       goal_percent: 100
 
 - name: Orange_Tulip
+  tooltip_data:
+    known_genes:
+      - colour_1
   starting_flowers:
     - species: tulip
       genes:
@@ -32,9 +43,13 @@
         species: tulip
         genes:
           colour_1: Ry
+          pigment: PP
       goal_percent: 100
 
 - name: Blue_Tulip
+  tooltip_data:
+    known_genes:
+      - colour_1
   requirements:
     - Yellow_Tulip
   starting_flowers:
@@ -53,6 +68,10 @@
       goal_percent: 100
 
 - name: Tulip_Trim
+  tooltip_data:
+    known_genes:
+      - colour_1
+      - trim
   requirements:
     - Blue_Tulip
   starting_flowers:
@@ -61,20 +80,28 @@
         colour_1: RR
         trim: TT
         trim_saturation: HH
+        pigment: PP
     - species: tulip
       genes:
         colour_1: yy
         trim: tt
         trim_saturation: HH
+        pigment: PP
   goal_flowers:
     - child:
         species: tulip
         genes:
           colour_1: RR
           trim: tt
+          pigment: PP
       goal_percent: 100
 
 - name: Tulip_Trim_Saturation
+  tooltip_data:
+    known_genes:
+      - colour_1
+      - trim
+      - trim_saturation
   requirements:
     - Tulip_Trim
   starting_flowers:
@@ -83,11 +110,13 @@
         colour_1: RR
         trim: TT
         trim_saturation: HH
+        pigment: PP
     - species: tulip
       genes:
         colour_1: RR
         trim: tt
         trim_saturation: LL
+        pigment: PP
   goal_flowers:
     - child:
         species: tulip
@@ -95,9 +124,13 @@
           colour_1: RR
           trim: TT
           trim_saturation: LL
+          pigment: PP
       goal_percent: 100
 
 - name: Tulip_Lineage
+  tooltip_data:
+    known_genes:
+      - colour_1
   requirements:
     - Blue_Tulip
   starting_flowers:
@@ -128,6 +161,10 @@
       goal_percent: 50
 
 - name: Tulip_Pigment
+  tooltip_data:
+    known_genes:
+      - colour_1
+      - pigment
   requirements:
     - Tulip_Lineage
   starting_flowers:
