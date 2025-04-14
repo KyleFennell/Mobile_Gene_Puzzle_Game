@@ -2,10 +2,10 @@ extends MarginContainer
 class_name GoalPanel
 
 @onready var ParentsContainer = %ParentsContainer
-@onready var Parent1 = %Parent1
-@onready var Parent2 = %Parent2
+@onready var Parent1: RestrictedItemSlot = %Parent1
+@onready var Parent2: RestrictedItemSlot = %Parent2
 @onready var Sep = %HSeparator
-@onready var Child = %Child
+@onready var Child: RestrictedItemSlot = %Child
 @onready var MatchPercent = %MatchPercent
 
 var goal_restrictions: ResearchContract.ResearchContractGoal
@@ -19,13 +19,20 @@ func set_goal_restrictions(new_goal_restrictions: ResearchContract.ResearchContr
 	goal_restrictions = new_goal_restrictions
 	var parent_restrictions = goal_restrictions.parents
 	if len(parent_restrictions) == 0:
+		# if the goal just requires a single flower (aka child)
 		ParentsContainer.hide()
 		Sep.hide()
 		MatchPercent.hide()
-
+		Child.fade_restriction()
+		
 	else:
+		# if the goal is a lineage requirement (aka parent)
 		Parent1.set_item_restrictions(parent_restrictions[0])
+		Parent1.fade_restriction()
 		Parent2.set_item_restrictions(parent_restrictions[1])
+		Parent2.fade_restriction()
+		Child.dropable = false
+	
 	Child.set_item_restrictions(goal_restrictions.child)
 	set_child_percent_label(0)
 

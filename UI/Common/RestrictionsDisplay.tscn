@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://UI/Common/restrictions_display.gd" id="1_lw6de"]
 
 [node name="RestrictionsDisplay" type="MarginContainer"]
-modulate = Color(1, 1, 1, 0.490196)
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3

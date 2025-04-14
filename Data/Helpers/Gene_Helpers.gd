@@ -253,12 +253,11 @@ static func phenotypes_match(phen1: Dictionary, phen2: Dictionary) -> bool:
 
 
 static func item_satisfies_restrictions(item: Item, restrictions: ResearchContract.GoalRestrictions) -> bool:
-	var item_phenotype = get_phenotype(item.species, item.genes)
-	var restrictions_phenotype = get_phenotype(restrictions.species, restrictions.genes)
-	restrictions_phenotype = _merge_phenotypes(restrictions_phenotype, restrictions.modules)
+	for gene in restrictions.genes:
+		if not GeneHelpers.alleles_match(item.genes[gene], restrictions.genes[gene]):
+			return false
+	return true
 
-	return phenotypes_match(item_phenotype, restrictions_phenotype)
-	
 
 static func alleles_match(a1: String, a2: String) -> bool:
 	for i in a1.length(): 

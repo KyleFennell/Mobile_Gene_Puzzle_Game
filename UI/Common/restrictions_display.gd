@@ -23,6 +23,12 @@ func update_restrictions_display() -> void:
 	var phenotypes = GeneHelpers.get_phenotype(restrictions.species, restrictions.genes)
 	phenotypes = GeneHelpers._merge_phenotypes(phenotypes, {"modules": restrictions.modules})
 	
+	#var modules = {}
+	#for module in self.item.modules:
+		#var effects = phenotypes.get("modules", {}).get(module.name, {})
+		#module.create_on(ModifiableChildren)
+		#module.process_attributes(effects)
+	#
 	var modules = []
 	for module in restrictions.species.modules:
 		if module.name in phenotypes.get("modules", {}).keys():

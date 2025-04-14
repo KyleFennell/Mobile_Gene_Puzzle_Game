@@ -29,3 +29,9 @@ func create_on(root: Node):
 
 func process_attributes(dict: Dictionary):
 	pass
+
+func is_equal(other: SpeciesModule) -> bool:
+	for param in params:
+		if other.params[param] != params[param]:
+			return false
+	return true

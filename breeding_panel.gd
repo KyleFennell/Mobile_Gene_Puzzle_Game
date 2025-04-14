@@ -20,13 +20,17 @@ func _process(delta: float) -> void:
 	pass
 
 func _parent_changed():
+	stop_breeding()
 	if Parent1.has_item() and Parent2.has_item():
+		start_breeding()
+
+
+func _child_changed():
+	if has_free_child():
 		start_breeding()
 	else:
 		stop_breeding()
 
-func _child_changed():
-	_parent_changed()
 
 func reset():
 	Parent1.set_item(null)
@@ -43,20 +47,24 @@ func update_tooltips(tooltip_data: Dictionary):
 
 func start_breeding():
 	if not has_free_child():
+		stop_breeding()
+	if Progress.is_running():
 		return
-	Progress.start()
+	if Parent1.has_item() and Parent2.has_item() and has_free_child():
+		Progress.start()
 	
 func stop_breeding():
+	Progress.set_percent(0)
 	Progress.stop()
 	
 func breeding_finished():
-	if not has_free_child():
-		stop_breeding()
-		return
 	var child_slot = get_free_child()
 	var child_item = GeneHelpers.generate_child(Parent1.item, Parent2.item)
 	child_slot.set_item(child_item)
-	start_breeding()
+	if has_free_child():
+		start_breeding()
+	else:
+		stop_breeding()
 
 func has_free_child() -> bool:
 	for child in Children.get_children():

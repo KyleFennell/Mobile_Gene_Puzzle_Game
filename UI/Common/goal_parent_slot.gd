@@ -28,6 +28,9 @@ func set_item_restrictions(_restrictions: ResearchContract.GoalRestrictions):
 	item_restrictions = _restrictions
 	update_restrictions()
 
+func fade_restriction():
+	RestrictionsDisplay.modulate = Color(1, 1, 1, 0.5)
+
 func update_restrictions():
 	RestrictionsDisplay.set_restrictions(item_restrictions)
 	update_tooltip_text()
@@ -44,11 +47,12 @@ func update_tooltip_text():
 	tooltip_text = tooltip
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	if item != null:
-		return data["previous_slot"].dropable
-	if not GeneHelpers.item_satisfies_restrictions(data.item, item_restrictions):
-		return data["previous_slot"].dropable
-	return dropable
+	if GeneHelpers.item_satisfies_restrictions(data["item"], item_restrictions):
+		if item != null:
+			return data["previous_slot"].dropable
+		else:
+			return dropable
+	return false
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if item != null:

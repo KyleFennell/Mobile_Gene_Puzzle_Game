@@ -22,3 +22,6 @@ func start():
 
 func stop():
 	ProgressTimer.stop()
+
+func is_running():
+	return not ProgressTimer.is_stopped()
