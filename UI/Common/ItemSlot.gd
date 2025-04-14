@@ -39,6 +39,8 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	return dropable
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if not dropable:
+		return
 	if item != null:
 		# swap items
 		if data.has("previous_slot") and data["previous_slot"].dropable:
@@ -58,7 +60,8 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	if dragable and item != null:
 		print(item.genes)
 		create_drag_preview()
-		ItemDisplay.hide()
+		if not infinite:
+			ItemDisplay.hide()
 		
 		var drag_data = {"item": item, "previous_slot": self}
 		Globals.current_drag = drag_data
