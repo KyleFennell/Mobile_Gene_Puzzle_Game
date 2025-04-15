@@ -1,5 +1,6 @@
 extends MarginContainer
 
+@onready var ContractLabel = %ContractLabel
 @onready var ResearchContainer = %ResearchContainer
 @onready var ResearchContractList = %ResearchContractList
 
@@ -11,3 +12,4 @@ func on_research_contract_clicked(research_contract_name: String):
 	var research_contract = Database.ResearchContracts.get(research_contract_name)
 	ResearchContainer.reset()
 	ResearchContainer.set_research_contract(research_contract)
+	ContractLabel.text = research_contract.name
