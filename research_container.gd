@@ -5,8 +5,9 @@ extends MarginContainer
 @onready var StartingSeedsPanel = %StartingSeedsPanel
 
 var s_GoalPanel = preload("res://goal_panel.tscn")
-
 var research_contract: ResearchContract = null
+
+signal contract_complete
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,6 +31,7 @@ func set_research_contract(new_research_contract):
 		var goal_slot = s_GoalPanel.instantiate()
 		GoalsRow.add_child(goal_slot)
 		goal_slot.set_goal_restrictions(goal)
+		goal_slot.goal_satisfied.connect(on_goal_complete)
 	update_tooltips(research_contract.tooltip_data)
 	
 func update_tooltips(tooltip_data: Dictionary):
@@ -38,3 +40,10 @@ func update_tooltips(tooltip_data: Dictionary):
 		breeder.update_tooltips(tooltip_data)
 	for goal in GoalsRow.get_children():
 		goal.update_tooltips(tooltip_data)
+
+func on_goal_complete():
+	for goal_panel in GoalsRow.get_children():
+		if not goal_panel.locked:
+			return
+	research_contract.completed = true
+	contract_complete.emit()

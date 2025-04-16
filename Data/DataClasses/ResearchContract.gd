@@ -7,6 +7,9 @@ var starting_flowers: Array[Item] = []
 var goal_flowers: Array[ResearchContractGoal] = []
 var tooltip_data: Dictionary
 var completed: bool = false
+var status: Status = Status.LOCKED
+
+enum Status {LOCKED, UNLOCKED, STARTED, COMPLETE}
 
 signal contract_complete
 
@@ -32,6 +35,9 @@ func _init(research_contract: Dictionary):
 	for goal_flower in research_contract.get("goal_flowers"):
 		goal_flowers.append(ResearchContractGoal.new(goal_flower))
 	tooltip_data = research_contract.get("tooltip_data", {})
+
+	if requirements == []:
+		status = Status.UNLOCKED
 
 
 class GoalRestrictions:

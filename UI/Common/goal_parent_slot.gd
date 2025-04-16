@@ -14,6 +14,9 @@ var item: Item = null
 var item_restrictions: ResearchContract.GoalRestrictions
 var tooltip_data: Dictionary = {}
 
+var unlocked_dragable: bool = dragable
+var unlocked_dropable: bool = dropable
+var unlocked_modulate: Color = modulate
 func _ready():
 	if item == null:
 		ItemDisplay.hide()
@@ -38,6 +41,16 @@ func update_restrictions():
 func update_tooltips(tooltip_data: Dictionary):
 	self.tooltip_data = tooltip_data
 	update_tooltip_text()
+
+func lock():
+	modulate = Color(.6, .9, .6, 1)
+	dragable = false
+	dropable = false
+
+func unlock():
+	modulate = unlocked_modulate
+	dragable = unlocked_dragable
+	dropable = unlocked_dropable
 
 func update_tooltip_text():
 	var tooltip = "---Restrictions---"

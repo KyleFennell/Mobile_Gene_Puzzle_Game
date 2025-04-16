@@ -158,7 +158,7 @@
         species: tulip
         genes:
           colour_1: bb
-      goal_percent: 50
+      goal_percent: 25
 
 - name: Tulip_Pigment
   tooltip_data:
