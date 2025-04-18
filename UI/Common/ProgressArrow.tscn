@@ -20,3 +20,4 @@ stretch_mode = 4
 
 [node name="ProgressTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+one_shot = true

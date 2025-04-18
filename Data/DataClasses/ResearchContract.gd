@@ -39,6 +39,9 @@ func _init(research_contract: Dictionary):
 	if requirements == []:
 		status = Status.UNLOCKED
 
+func complete():
+	completed = true
+	status = Status.COMPLETE
 
 class GoalRestrictions:
 	var modules: Dictionary

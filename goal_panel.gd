@@ -6,8 +6,8 @@ enum GOAL_TYPE {LINEAGE, INDIVIDUAL}
 @onready var ParentsContainer = %ParentsContainer
 @onready var Parent1: RestrictedItemSlot = %Parent1
 @onready var Parent2: RestrictedItemSlot = %Parent2
-@onready var Sep = %HSeparator
 @onready var Child: RestrictedItemSlot = %Child
+@onready var Sep = %HSeparator
 @onready var MatchPercent = %MatchPercent
 
 var goal_restrictions: ResearchContract.ResearchContractGoal
@@ -89,3 +89,23 @@ func lock_goal():
 	Parent2.lock()
 	Child.lock()
 	goal_satisfied.emit()
+
+func save_data() -> Dictionary:
+	var data = {}
+	data.parent1 = Parent1.item
+	data.parent2 = Parent2.item
+	data.child = Child.item
+	data.locked = locked
+	return data
+
+func load_data(data: Dictionary):
+	Parent1.set_item(data["parent1"])
+	Parent2.set_item(data["parent2"])
+	Child.set_item(data["child"])
+	locked = data["locked"]
+	
+	
+	
+	
+	
+	

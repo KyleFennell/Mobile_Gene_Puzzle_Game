@@ -39,7 +39,10 @@
       genes:
         colour_1: Ry
   goal_flowers:
-    - child:
+    - parents:
+        - species: tulip
+        - species: tulip
+      child:
         species: tulip
         genes:
           colour_1: Ry
@@ -53,9 +56,6 @@
   requirements:
     - Yellow_Tulip
   starting_flowers:
-    - species: tulip
-      genes:
-        colour_1: Ry
     - species: tulip
       genes:
         colour_1: yb
@@ -79,13 +79,13 @@
       genes:
         colour_1: RR
         trim: TT
-        trim_saturation: HH
+        trim_saturation: LL
         pigment: PP
     - species: tulip
       genes:
         colour_1: yy
         trim: tt
-        trim_saturation: HH
+        trim_saturation: LL
         pigment: PP
   goal_flowers:
     - child:
@@ -94,6 +94,7 @@
           colour_1: RR
           trim: tt
           pigment: PP
+          trim_saturation: LL
       goal_percent: 100
 
 - name: Tulip_Trim_Saturation
@@ -158,6 +159,7 @@
         species: tulip
         genes:
           colour_1: bb
+          pigment: PP
       goal_percent: 25
 
 - name: Tulip_Pigment

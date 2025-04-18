@@ -7,7 +7,7 @@ class_name ItemSlot
 @export var dragable: bool = true
 @export var dropable: bool = true
 @export var infinite: bool = false
-
+@export var tooltip_enabled: bool = false
 signal slot_contence_changed
 var item: Item = null
 var tooltip_data: Dictionary = {}
@@ -27,11 +27,16 @@ func set_item(_item: Item) -> void:
 	ItemDisplay.set_item(item)
 	emit_signal("slot_contence_changed")
 	if item:
-		tooltip_text = item.get_tooltip(tooltip_data)
+		_set_tooltip_text(item.get_tooltip(tooltip_data))
 
 func update_tooltips(tooltip_data: Dictionary):
 	self.tooltip_data = tooltip_data
-	if item: tooltip_text = item.get_tooltip(tooltip_data)
+	if item: 
+		_set_tooltip_text(item.get_tooltip(tooltip_data))
+
+func _set_tooltip_text(value: String):
+	if tooltip_enabled:
+		tooltip_text = value
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if item != null:

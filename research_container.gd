@@ -20,6 +20,8 @@ func _process(delta: float) -> void:
 func reset():
 	research_contract = null
 	StartingSeedsPanel.reset()
+	for breeder in Breeders.get_children():
+		breeder.reset()
 	for child in GoalsRow.get_children():
 		child.free()
 	update_tooltips({})
@@ -45,5 +47,21 @@ func on_goal_complete():
 	for goal_panel in GoalsRow.get_children():
 		if not goal_panel.locked:
 			return
-	research_contract.completed = true
+	research_contract.complete()
 	contract_complete.emit()
+
+func save_data() -> Dictionary:
+	var data = {}
+	data.breeders = []
+	for breeder in Breeders.get_children():
+		data.breeders.append(breeder.save_data())
+	data.goals = []
+	for goal in GoalsRow.get_children():
+		data.goals.append(goal.save_data())
+	return data
+
+func load_data(data: Dictionary):
+	for i in len(data["breeders"]):
+		Breeders.get_child(i).load_data(data["breeders"][i])
+	for i in len(data["goals"]):
+		GoalsRow.get_child(i).load_data(data["goals"][i])

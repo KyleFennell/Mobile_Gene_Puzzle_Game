@@ -2,9 +2,7 @@ extends MarginContainer
 
 @onready var Parent1 = %Parent1
 @onready var Parent2 = %Parent2
-
 @onready var Children = %Children
-
 @onready var Progress = %ProgressBar
 
 # Called when the node enters the scene tree for the first time.
@@ -24,13 +22,11 @@ func _parent_changed():
 	if Parent1.has_item() and Parent2.has_item():
 		start_breeding()
 
-
 func _child_changed():
 	if has_free_child():
 		start_breeding()
 	else:
 		stop_breeding()
-
 
 func reset():
 	Parent1.set_item(null)
@@ -77,3 +73,21 @@ func get_free_child() -> ItemSlot:
 		if not child.has_item():
 			return child
 	return null
+
+func save_data() -> Dictionary:
+	var data = {}
+	data.parent1 = Parent1.item
+	data.parent2 = Parent2.item
+	data.children = []
+	for child in Children.get_children():
+		data.children.append(child.item)
+	data.progress = Progress.save_data()
+	return data
+
+func load_data(data: Dictionary):
+	Parent1.set_item(data["parent1"])
+	Parent2.set_item(data["parent2"])
+	for i in len(data["children"]):
+		Children.get_child(i).set_item(data["children"][i])
+	Progress.load_data(data["progress"])
+	

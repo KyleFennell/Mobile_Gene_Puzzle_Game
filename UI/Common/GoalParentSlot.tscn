@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://6h7mr2jfcvtw"]
 
-[ext_resource type="Script" path="res://UI/Common/goal_parent_slot.gd" id="1_40m86"]
+[ext_resource type="Script" path="res://UI/Common/RestrictedItemSlot.gd" id="1_40m86"]
 [ext_resource type="Texture2D" uid="uid://c7te5fnjbuoga" path="res://Resources/UI/Empty_Slot.png" id="2_lokf1"]
 [ext_resource type="PackedScene" uid="uid://bvd0t6ahgdtt5" path="res://UI/Common/ItemDisplay.tscn" id="3_3s82n"]
 [ext_resource type="PackedScene" uid="uid://c6ljjedqykbk4" path="res://UI/Common/RestrictionsDisplay.tscn" id="3_ob4dp"]

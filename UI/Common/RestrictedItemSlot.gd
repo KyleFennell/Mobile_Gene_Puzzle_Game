@@ -8,15 +8,18 @@ class_name RestrictedItemSlot
 @export var dragable: bool = true
 @export var dropable: bool = true
 @export var infinite: bool = false
+@export var tooltip_enabled: bool = false
 
 signal slot_contence_changed
 var item: Item = null
 var item_restrictions: ResearchContract.GoalRestrictions
 var tooltip_data: Dictionary = {}
 
+
 var unlocked_dragable: bool = dragable
 var unlocked_dropable: bool = dropable
 var unlocked_modulate: Color = modulate
+
 func _ready():
 	if item == null:
 		ItemDisplay.hide()
@@ -57,9 +60,15 @@ func update_tooltip_text():
 	tooltip += "\n" + ("None" if not item_restrictions else item_restrictions.get_tooltip(tooltip_data))
 	tooltip += "\n---Item---"
 	tooltip += "\n" + ("None" if not item else item.get_tooltip(tooltip_data))
-	tooltip_text = tooltip
+	_set_tooltip_text(tooltip)
+
+func _set_tooltip_text(value: String) -> void:
+	if tooltip_enabled:
+		tooltip_text = value
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	if not dropable:
+		return false
 	if GeneHelpers.item_satisfies_restrictions(data["item"], item_restrictions):
 		if item != null:
 			return data["previous_slot"].dropable
