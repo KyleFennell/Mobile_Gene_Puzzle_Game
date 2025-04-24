@@ -1,0 +1,78 @@
+extends MarginContainer
+
+@onready var GoalsRow = %GoalsRow
+@onready var Breeders = %Breeders
+@onready var StartingSeedsPanel = %StartingSeedsPanel
+
+var s_GoalPanel = preload("res://goal_panel.tscn")
+var research_contract: ResearchContract = null
+
+signal contract_complete
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func reset():
+	research_contract = null
+	StartingSeedsPanel.reset()
+	for breeder in Breeders.get_children():
+		breeder.free()
+	for child in GoalsRow.get_children():
+		child.free()
+	update_tooltips({})
+
+func set_research_contract(new_research_contract):
+	research_contract = new_research_contract
+	StartingSeedsPanel.set_starting_flowers(research_contract.starting_flowers)
+	for breeder in research_contract.no_of_breeders:
+		add_breeder()
+	for goal in research_contract.goal_flowers:
+		add_goal(goal)
+	update_tooltips(research_contract.tooltip_data)
+
+func add_goal(goal: ResearchContract.ResearchContractGoal):
+	var goal_slot = s_GoalPanel.instantiate()
+	GoalsRow.add_child(goal_slot)
+	goal_slot.set_goal_restrictions(goal)
+	goal_slot.goal_satisfied.connect(on_goal_complete)
+
+func add_breeder():
+	var Breeder = load("res://breeding_panel.tscn")
+	var breeder = Breeder.instantiate()
+	%Breeders.add_child(breeder)
+	
+func update_tooltips(tooltip_data: Dictionary):
+	StartingSeedsPanel.update_tooltips(tooltip_data)
+	for breeder in Breeders.get_children():
+		breeder.update_tooltips(tooltip_data)
+	for goal in GoalsRow.get_children():
+		goal.update_tooltips(tooltip_data)
+
+func on_goal_complete():
+	for goal_panel in GoalsRow.get_children():
+		if not goal_panel.locked:
+			return
+	research_contract.complete()
+	contract_complete.emit()
+
+func save_data() -> Dictionary:
+	var data = {}
+	data.breeders = []
+	for breeder in Breeders.get_children():
+		data.breeders.append(breeder.save_data())
+	data.goals = []
+	for goal in GoalsRow.get_children():
+		data.goals.append(goal.save_data())
+	return data
+
+# requires the research contract to already be set. there is no validation that the loaded data is for the current contract layout
+func load_data(data: Dictionary):
+	for i in len(data["breeders"]):
+		Breeders.get_child(i).load_data(data["breeders"][i])
+	for i in len(data["goals"]):
+		GoalsRow.get_child(i).load_data(data["goals"][i])

@@ -90,6 +90,7 @@ horizontal_alignment = 1
 
 [node name="ResearchContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("14_ggayf")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]

@@ -3,8 +3,8 @@ extends MarginContainer
 @export var dialogue_json: JSON
 var state = {}
 var skip_next_textanimation = false
-var speed = 0.02
-var percent_visible = 0.0
+var speed = 40
+var visible_characters = 0.0
 var current_text = ""
 var text_animation_finished = false
 var eod_reached = false
@@ -18,10 +18,9 @@ func _ready():
 func _process(delta: float) -> void:
 	if text_animation_finished:
 		return
-	if percent_visible < 1:
-		print(percent_visible, " ", %TextBox.visible_characters, " ", %TextBox.get_total_character_count())
-		percent_visible += 1.0/%TextBox.get_total_character_count()/speed*delta
-		%TextBox.visible_characters = %TextBox.get_total_character_count() * percent_visible
+	if visible_characters < %TextBox.get_total_character_count():
+		visible_characters += clamp(speed*delta, 0, %TextBox.get_total_character_count())
+		%TextBox.visible_characters = visible_characters
 	else:
 		text_animation_finished = true
 		_on_text_animation_finished()
@@ -31,15 +30,15 @@ func _on_ez_dialogue_dialogue_generated(response: DialogueResponse) -> void:
 	eod_reached = response.eod_reached
 
 	if skip_next_textanimation:
-		percent_visible = 1
+		visible_characters = %TextBox.get_total_character_count()
 		skip_next_textanimation = false
 		_on_text_animation_finished()
 	else:
-		percent_visible = 0
+		visible_characters = 0
 		text_animation_finished = false
 	
+	%TextBox.visible_characters = visible_characters
 	%TextBox.text = response.text
-	print(%TextBox.text)
 	%ContinueButton.text = "continue" if response.choices == [] else response.choices[0]
 
 func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
