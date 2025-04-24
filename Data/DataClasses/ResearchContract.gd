@@ -5,6 +5,7 @@ var name: String = ""
 var requirements: Array[String] = []
 var starting_flowers: Array[Item] = []
 var goal_flowers: Array[ResearchContractGoal] = []
+var no_of_breeders: int = 2
 var tooltip_data: Dictionary
 var completed: bool = false
 var status: Status = Status.LOCKED

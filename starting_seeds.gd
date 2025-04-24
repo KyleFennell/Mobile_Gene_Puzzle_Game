@@ -6,13 +6,16 @@ var starting_flowers: Array[Item] = []
 
 func set_starting_flowers(starting_flowers: Array[Item]):
 	self.starting_flowers = starting_flowers
-	for starting_flower in self.starting_flowers:
-		var slot = s_ItemSlot.instantiate()
-		StartingSeeds.add_child(slot)
-		slot.set_item(starting_flower)
-		slot.infinite = true
-		slot.dropable = false
-		slot.tooltip_enabled = true
+	for flower in self.starting_flowers:
+		add_starting_flower(flower)
+
+func add_starting_flower(flower: Item):
+	var slot = s_ItemSlot.instantiate()
+	StartingSeeds.add_child(slot)
+	slot.set_item(flower)
+	slot.infinite = true
+	slot.dropable = false
+	slot.tooltip_enabled = true
 
 func reset():
 	for child in StartingSeeds.get_children():

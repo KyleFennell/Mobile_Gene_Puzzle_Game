@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://rhempuko4g4p" path="res://Resources/Identification.tres" id="4_a2veh"]
 
 [node name="ItemDisplay" type="MarginContainer"]
+custom_minimum_size = Vector2(64, 64)
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3

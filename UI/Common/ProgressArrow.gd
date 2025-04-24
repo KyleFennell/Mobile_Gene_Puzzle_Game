@@ -23,6 +23,7 @@ func start():
 	ProgressTimer.start(TIME)
 
 func stop():
+	set_percent(0)
 	ProgressTimer.stop()
 
 func resume_from(time: float, resume_offset: float):

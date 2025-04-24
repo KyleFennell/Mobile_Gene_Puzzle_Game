@@ -21,7 +21,7 @@ func reset():
 	research_contract = null
 	StartingSeedsPanel.reset()
 	for breeder in Breeders.get_children():
-		breeder.reset()
+		breeder.free()
 	for child in GoalsRow.get_children():
 		child.free()
 	update_tooltips({})
@@ -29,12 +29,22 @@ func reset():
 func set_research_contract(new_research_contract):
 	research_contract = new_research_contract
 	StartingSeedsPanel.set_starting_flowers(research_contract.starting_flowers)
+	for breeder in research_contract.no_of_breeders:
+		add_breeder()
 	for goal in research_contract.goal_flowers:
-		var goal_slot = s_GoalPanel.instantiate()
-		GoalsRow.add_child(goal_slot)
-		goal_slot.set_goal_restrictions(goal)
-		goal_slot.goal_satisfied.connect(on_goal_complete)
+		add_goal(goal)
 	update_tooltips(research_contract.tooltip_data)
+
+func add_goal(goal: ResearchContract.ResearchContractGoal):
+	var goal_slot = s_GoalPanel.instantiate()
+	GoalsRow.add_child(goal_slot)
+	goal_slot.set_goal_restrictions(goal)
+	goal_slot.goal_satisfied.connect(on_goal_complete)
+
+func add_breeder():
+	var Breeder = load("res://breeding_panel.tscn")
+	var breeder = Breeder.instantiate()
+	%Breeders.add_child(breeder)
 	
 func update_tooltips(tooltip_data: Dictionary):
 	StartingSeedsPanel.update_tooltips(tooltip_data)
@@ -60,6 +70,7 @@ func save_data() -> Dictionary:
 		data.goals.append(goal.save_data())
 	return data
 
+# requires the research contract to already be set. there is no validation that the loaded data is for the current contract layout
 func load_data(data: Dictionary):
 	for i in len(data["breeders"]):
 		Breeders.get_child(i).load_data(data["breeders"][i])

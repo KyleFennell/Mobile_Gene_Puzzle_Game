@@ -175,27 +175,29 @@ static func _convert_children(children: Array[Dictionary]) -> Array[_ChildChance
 	return children_items
 
 
-static func generate_phenotype_percents(children: Array[_ChildChancePair]) -> Dictionary:
+static func generate_phenotype_percents(children: Array[_ChildChancePair]) -> Array[_ChildChancePair]:
 	# aggregates all phenotypes from the list of genotypical children
 	# and produces their percentages. It skips hidden children as their phenotype
 	# isn't known to the player
 	var phenotypes = {}
 	for child in children:
-		if is_hidden(child["child"]):
-			continue
+		#if is_hidden(child["child"]):
+			#continue
 		var properties = get_phenotype(child["child"].species, child["child"].genes)
 		var phenotype = ""
-		for property in properties:
-			phenotype += str(properties[property])
+		
+		for module in properties.get("modules", []):
+			phenotype += str(properties["modules"][module])
 		if not phenotype in phenotypes:
-			phenotypes[phenotype] = {
-				"item": child["child"],
-				"chance": child["chance"]
-			}
+			phenotypes[phenotype] = child
 		else:
-			phenotypes[phenotype]["chance"] += child["chance"]
-	return phenotypes
-
+			phenotypes[phenotype].chance += child.chance
+	# cast to output type
+	var phenotype_pairs: Array[_ChildChancePair] = []
+	for p in phenotypes.values():
+		phenotype_pairs.append(_ChildChancePair.new(p.child, p.chance))
+	return phenotype_pairs
+	
 
 static func is_hidden(child: Item) -> bool:
 	# if any allele in the child is hidden return true
@@ -244,11 +246,10 @@ static func phenotypes_match(phen1: Dictionary, phen2: Dictionary) -> bool:
 	
 	if p1_keys != p2_keys:
 		return false
-		
+	
 	for k in phen1.keys():
 		if phen1[k] != phen2[k]:
 			return false
-	
 	return true
 
 

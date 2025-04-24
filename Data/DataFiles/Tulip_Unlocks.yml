@@ -196,7 +196,7 @@
         species: tulip
         genes:
           colour_1: Ry
-          pigment: P*
+          pigment: PP
       goal_percent: 25
 
 - name:  Special_White_and_Blue

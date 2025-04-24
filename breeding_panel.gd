@@ -50,7 +50,6 @@ func start_breeding():
 		Progress.start()
 	
 func stop_breeding():
-	Progress.set_percent(0)
 	Progress.stop()
 	
 func breeding_finished():

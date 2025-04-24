@@ -33,6 +33,7 @@ func update_restrictions_display() -> void:
 	for module in restrictions.species.modules:
 		if module.name in phenotypes.get("modules", {}).keys():
 			var module_obj = SpeciesModules.get_module(module["kind"]).new(module, modules)
+			modules.append(module_obj)
 			var effects = phenotypes.get("modules", {}).get(module.name, {})
 			module_obj.create_on(ModifiableChildren)
 			module_obj.process_attributes(effects)
