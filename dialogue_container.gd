@@ -60,6 +60,8 @@ func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
 					dialogue_event.emit("show_red_tulip")
 				"yellow_tulip":
 					dialogue_event.emit("show_yellow_tulip")
+		"set_state_step":
+			state["step"] = params[1]
 
 func finish_text_animation():
 	visible_characters = %TextBox.get_total_character_count()
@@ -67,15 +69,29 @@ func finish_text_animation():
 	skip_next_textanimation = false
 	_on_text_animation_finished()
 
-func process_event_completion(value: String):
-	var params = value.split(",")
-	match params[0]:
-		"hover_flower":
-			match params[1]:
-				"red_tulip":
-					_on_red_tulip_hover()
-				"yellow_tulip":
-					_on_yelow_tulip_hover()
+func process_event_completion(value: Dictionary):
+	print("dialogue received event: ", value)
+	if "hover_flower" in value.keys():
+		match value["hover_flower"]:
+			"red_tulip":
+				_on_red_tulip_hover()
+			"yellow_tulip":
+				_on_yelow_tulip_hover()
+	if "breeder_parent_changed" in value.keys():
+		if state.get("step", "") == "breeding_orange":
+			var parents = value["breeder_parent_changed"]
+			if parents[0] == null or parents[1] == null:
+				return
+			elif parents[0].genes["colour_1"] == parents[1].genes["colour_1"]:
+				# parents are the same
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_same_parent_orange_breed")
+	if "breeder_new_child" in value.keys():
+		if state.get("step", "") == "breeding_orange":
+			var child = value["breeder_new_child"]
+			if child.genes["colour_1"] == "RY":
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_orange_flower_bred")
+				state.step = ""
+
 
 func _on_text_animation_finished():
 	print("text animation finished")
@@ -84,11 +100,11 @@ func _on_text_animation_finished():
 
 func _on_red_tulip_hover():
 	print("red tulip hover complete")
-	($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "red_tulip_hover")
+	($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_red_tulip_hover")
 
 func _on_yelow_tulip_hover():
 	print("yellow tulip hover complete")
-	($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "yellow_tulip_hover")
+	($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_yellow_tulip_hover")
 
 func _on_continue_button_pressed():
 	$EzDialogue.next()

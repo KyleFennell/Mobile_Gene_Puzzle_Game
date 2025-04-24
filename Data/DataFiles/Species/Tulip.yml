@@ -32,18 +32,18 @@ genome:
   - name: colour_1
     alleles:
       - R
-      - "y"
+      - "Y"
       - b
     default: RR
     phenotypes:
-      Ry:
+      RY:
         interactions:
           - red
           - yellow
       R*:
         interactions:
           - red
-      y*:
+      Y*:
         interactions:
           - yellow
       bb:

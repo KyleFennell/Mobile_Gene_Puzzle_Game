@@ -12,13 +12,14 @@ signal event_emit
 
 func _ready() -> void:
 	%RedTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"RR"}}))
-	%YellowTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"yy"}}))
-	%BlueTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"bb"}}))
-	add_hover_tracker(%RedTulip, 0.5, func (): event_emit.emit("hover_flower,red_tulip"))
-	add_hover_tracker(%YellowTulip, 0.5, func (): event_emit.emit("hover_flower,yellow_tulip"))
-	add_hover_tracker(%BlueTulip, 0.5, func (): event_emit.emit("hover_flower,blue_tulip"))
-	%BreedingPanel.parents_changed.connect(func (data): event_emit.emit("breeder_parents_changed", data))
-	%BreedingPanel.child_bred.connect(func (data): event_emit.emit("breeder_child_bred", data))
+	%YellowTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"YY"}}))
+	#%BlueTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"bb"}}))
+	add_hover_tracker(%RedTulip, 0.5, func (): event_emit.emit({"hover_flower":"red_tulip"}))
+	add_hover_tracker(%YellowTulip, 0.5, func (): event_emit.emit({"hover_flower":"yellow_tulip"}))
+	#add_hover_tracker(%BlueTulip, 0.5, func (): event_emit.emit({"hover_flower":"blue_tulip"}))
+	%BreedingPanel.parents_changed.connect(func (data): event_emit.emit({"breeder_parent_changed": data}))
+	%BreedingPanel.new_child.connect(func (data): event_emit.emit({"breeder_new_child": data}))
+	update_tooltips({"known_genes": ["colour_1"]})
 
 func show_red_tulip():
 	%RedTulip.show()
@@ -47,7 +48,8 @@ func add_hover_tracker(node: Control, duration: float, callback: Callable):
 	add_child(timer)
 	timer.wait_time = duration
 	timer.timeout.connect(func ():
-		callback
+		print("hover complete")
+		callback.call()
 		timer.queue_free()
 	)
 	node.mouse_entered.connect(timer.start)

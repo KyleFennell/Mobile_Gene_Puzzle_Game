@@ -21,12 +21,12 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: Ry
+        colour_1: RY
   goal_flowers:
     - child:
         species: tulip
         genes:
-          colour_1: yy
+          colour_1: YY
           pigment: PP
       goal_percent: 100
 
@@ -37,7 +37,7 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: Ry
+        colour_1: RY
   goal_flowers:
     - parents:
         - species: tulip
@@ -45,7 +45,7 @@
       child:
         species: tulip
         genes:
-          colour_1: Ry
+          colour_1: RY
           pigment: PP
       goal_percent: 100
 
@@ -58,7 +58,7 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: yb
+        colour_1: Yb
   goal_flowers:
     - child:
         species: tulip
@@ -83,7 +83,7 @@
         pigment: PP
     - species: tulip
       genes:
-        colour_1: yy
+        colour_1: YY
         trim: tt
         trim_saturation: LL
         pigment: PP
@@ -137,7 +137,7 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: Ry
+        colour_1: RY
     - species: tulip
       genes:
         colour_1: yb
@@ -172,7 +172,7 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: Ry
+        colour_1: RY
         pigment: PP
     - species: tulip
       genes:
@@ -195,7 +195,7 @@
       child:
         species: tulip
         genes:
-          colour_1: Ry
+          colour_1: RY
           pigment: PP
       goal_percent: 25
 
@@ -206,7 +206,7 @@
   starting_flowers:
     - species: tulip
       genes:
-        colour_1: Ry
+        colour_1: RY
         pigment: PP
         trim: tt
         trim_saturation: LL
@@ -234,6 +234,6 @@
       child:
         species: tulip
         genes:
-          colour_1: yy
+          colour_1: YY
           pigment: P*
       goal_percent: 50

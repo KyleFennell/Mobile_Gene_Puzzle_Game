@@ -59,6 +59,7 @@ layout_mode = 2
 
 [node name="RiggedBreedingPanel" parent="PanelContainer/VBoxContainer/Breeders" instance=ExtResource("5_gihpn")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="GoalsRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]

@@ -9,6 +9,7 @@ func _ready() -> void:
 	%ResearchContractList.research_contract_clicked.connect(_on_research_contract_clicked)
 	%ResearchContainer.contract_complete.connect(_on_contract_complete)
 	%DialogueContainer.dialogue_event.connect(_on_dialogue_event)
+	%TutorialResearchContainer.event_emit.connect(_on_tutorial_research_conatiner_event)
 	
 func _on_research_contract_clicked(research_contract_name: String):
 	if %ResearchContainer.research_contract != null:
@@ -46,5 +47,6 @@ func _on_dialogue_event(value: String):
 		"show_blue_tulip":
 			%TutorialResearchContainer.show_blue_tulip()
 
-func _on_tutorial_research_conatiner_event(value: String):
-	%DialogueContianer.process_event_completion(value)
+func _on_tutorial_research_conatiner_event(value: Dictionary):
+	print("passing on event: ", value)
+	%DialogueContainer.process_event_completion(value)
