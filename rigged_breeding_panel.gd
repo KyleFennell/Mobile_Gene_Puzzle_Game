@@ -6,7 +6,7 @@ extends MarginContainer
 @onready var Progress = %ProgressBar
 
 signal parents_changed
-signal child_bred
+signal child_breed
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -60,7 +60,7 @@ func breeding_finished():
 	var child_slot = get_free_child()
 	var child_item = GeneHelpers.generate_child(Parent1.item, Parent2.item)
 	child_slot.set_item(child_item)
-	child_bred.emit(child_item)
+	child_breed.emit(child_item)
 	if has_free_child():
 		start_breeding()
 	else:

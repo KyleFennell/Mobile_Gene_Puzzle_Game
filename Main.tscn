@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://sbaua26wbca"]
+[gd_scene load_steps=22 format=4 uid="uid://sbaua26wbca"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1why3"]
 [ext_resource type="StyleBox" uid="uid://boyhwcuefkdjp" path="res://Panel.tres" id="1_prqu4"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://buw4eyphfcei" path="res://Predictor.tscn" id="4_30sab"]
 [ext_resource type="PackedScene" uid="uid://cjsbljwalfj35" path="res://UI/InfoPanel.tscn" id="5_4s7q0"]
 [ext_resource type="PackedScene" uid="uid://cr7ewg0pc5j5b" path="res://UI/story_container.tscn" id="5_ltbis"]
+[ext_resource type="PackedScene" uid="uid://dviwwc8r4n8dy" path="res://tutorial_research_container.tscn" id="6_5ptxp"]
 [ext_resource type="PackedScene" uid="uid://bo1qqbk35bbsp" path="res://DialogueContainer.tscn" id="6_pax2w"]
 [ext_resource type="Script" path="res://Tutorial.gd" id="7_32kts"]
 [ext_resource type="StyleBox" uid="uid://bwnyx0lv1gftl" path="res://Spotlight_Panel.tres" id="7_lj0bl"]
@@ -86,11 +87,16 @@ layout_mode = 2
 [node name="ContractLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Panel"]
 unique_name_in_owner = true
 layout_mode = 2
+text = "Genetic Basics"
 horizontal_alignment = 1
 
 [node name="ResearchContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("14_ggayf")]
 unique_name_in_owner = true
 visible = false
+layout_mode = 2
+
+[node name="TutorialResearchContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("6_5ptxp")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
@@ -103,6 +109,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1

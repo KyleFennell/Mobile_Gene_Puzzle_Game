@@ -40,11 +40,11 @@ func _on_dialogue_event(value: String):
 	var params = value.split(",")
 	match params[0]:
 		"show_red_tulip":
-			show_red_tulip()
+			%TutorialResearchContainer.show_red_tulip()
 		"show_yellow_tulip":
-			show_yellow_tulip()
-			
-func show_red_tulip():
-	pass
-func show_yellow_tulip():
-	pass
+			%TutorialResearchContainer.show_yellow_tulip()
+		"show_blue_tulip":
+			%TutorialResearchContainer.show_blue_tulip()
+
+func _on_tutorial_research_conatiner_event(value: String):
+	%DialogueContianer.process_event_completion(value)

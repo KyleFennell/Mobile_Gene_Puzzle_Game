@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dviwwc8r4n8dy"]
+[gd_scene load_steps=6 format=3 uid="uid://dviwwc8r4n8dy"]
 
 [ext_resource type="Script" path="res://tutorial_research_container.gd" id="1_brjqd"]
 [ext_resource type="PackedScene" uid="uid://d0uecadtk25df" path="res://starting_seeds.tscn" id="2_cckmw"]
+[ext_resource type="PackedScene" uid="uid://bdm8heeojuy7h" path="res://UI/Common/ItemSlot.tscn" id="3_3ser0"]
+[ext_resource type="PackedScene" uid="uid://cmxtpbm5ynmef" path="res://breeding_panel.tscn" id="3_i8l4a"]
+[ext_resource type="PackedScene" uid="uid://c7pttw14ijr1g" path="res://rigged_breeding_panel.tscn" id="5_gihpn"]
 
 [node name="TutorialResearchContainer" type="MarginContainer"]
+size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 script = ExtResource("1_brjqd")
@@ -23,12 +27,43 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 
+[node name="RedTulip" parent="PanelContainer/VBoxContainer/StartingSeedsPanel/PanelContainer/VBoxContainer/StartingSeeds" index="0" instance=ExtResource("3_3ser0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+infinite = true
+tooltip_enabled = true
+
+[node name="YellowTulip" parent="PanelContainer/VBoxContainer/StartingSeedsPanel/PanelContainer/VBoxContainer/StartingSeeds" index="1" instance=ExtResource("3_3ser0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+infinite = true
+tooltip_enabled = true
+
+[node name="BlueTulip" parent="PanelContainer/VBoxContainer/StartingSeedsPanel/PanelContainer/VBoxContainer/StartingSeeds" index="2" instance=ExtResource("3_3ser0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+infinite = true
+tooltip_enabled = true
+
 [node name="Breeders" type="HFlowContainer" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="BreedingPanel" parent="PanelContainer/VBoxContainer/Breeders" instance=ExtResource("3_i8l4a")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RiggedBreedingPanel" parent="PanelContainer/VBoxContainer/Breeders" instance=ExtResource("5_gihpn")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="GoalsRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+
+[editable path="PanelContainer/VBoxContainer/StartingSeedsPanel"]

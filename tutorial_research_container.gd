@@ -8,14 +8,29 @@ var s_GoalPanel = preload("res://goal_panel.tscn")
 var research_contract: ResearchContract = null
 
 signal contract_complete
+signal event_emit
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	%RedTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"RR"}}))
+	%YellowTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"yy"}}))
+	%BlueTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"bb"}}))
+	add_hover_tracker(%RedTulip, 0.5, func (): event_emit.emit("hover_flower,red_tulip"))
+	add_hover_tracker(%YellowTulip, 0.5, func (): event_emit.emit("hover_flower,yellow_tulip"))
+	add_hover_tracker(%BlueTulip, 0.5, func (): event_emit.emit("hover_flower,blue_tulip"))
+	%BreedingPanel.parents_changed.connect(func (data): event_emit.emit("breeder_parents_changed", data))
+	%BreedingPanel.child_bred.connect(func (data): event_emit.emit("breeder_child_bred", data))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func show_red_tulip():
+	%RedTulip.show()
+
+func show_yellow_tulip():
+	%YellowTulip.show()
+
+func show_breeder():
+	%BreedingPanel.show()
+
+func show_rigged_breeder():
+	%RiggedBreedingPanel.show()
 
 func reset():
 	research_contract = null
@@ -26,14 +41,17 @@ func reset():
 		child.free()
 	update_tooltips({})
 
-func set_research_contract(new_research_contract):
-	research_contract = new_research_contract
-	StartingSeedsPanel.set_starting_flowers(research_contract.starting_flowers)
-	for breeder in research_contract.no_of_breeders:
-		add_breeder()
-	for goal in research_contract.goal_flowers:
-		add_goal(goal)
-	update_tooltips(research_contract.tooltip_data)
+
+func add_hover_tracker(node: Control, duration: float, callback: Callable):
+	var timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = duration
+	timer.timeout.connect(func ():
+		callback
+		timer.queue_free()
+	)
+	node.mouse_entered.connect(timer.start)
+	node.mouse_exited.connect(timer.stop)
 
 func add_goal(goal: ResearchContract.ResearchContractGoal):
 	var goal_slot = s_GoalPanel.instantiate()
@@ -41,11 +59,6 @@ func add_goal(goal: ResearchContract.ResearchContractGoal):
 	goal_slot.set_goal_restrictions(goal)
 	goal_slot.goal_satisfied.connect(on_goal_complete)
 
-func add_breeder():
-	var Breeder = load("res://breeding_panel.tscn")
-	var breeder = Breeder.instantiate()
-	%Breeders.add_child(breeder)
-	
 func update_tooltips(tooltip_data: Dictionary):
 	StartingSeedsPanel.update_tooltips(tooltip_data)
 	for breeder in Breeders.get_children():
