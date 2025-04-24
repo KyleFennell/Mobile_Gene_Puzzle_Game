@@ -1,11 +1,13 @@
-[gd_scene load_steps=19 format=4 uid="uid://sbaua26wbca"]
+[gd_scene load_steps=21 format=4 uid="uid://sbaua26wbca"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1why3"]
 [ext_resource type="StyleBox" uid="uid://boyhwcuefkdjp" path="res://Panel.tres" id="1_prqu4"]
 [ext_resource type="Script" path="res://UI/UIRoot.gd" id="2_842ad"]
 [ext_resource type="PackedScene" uid="uid://hxenegbtvpvi" path="res://UI/MidStyledButton.tscn" id="3_2puuq"]
+[ext_resource type="PackedScene" uid="uid://buw4eyphfcei" path="res://Predictor.tscn" id="4_30sab"]
 [ext_resource type="PackedScene" uid="uid://cjsbljwalfj35" path="res://UI/InfoPanel.tscn" id="5_4s7q0"]
 [ext_resource type="PackedScene" uid="uid://cr7ewg0pc5j5b" path="res://UI/story_container.tscn" id="5_ltbis"]
+[ext_resource type="PackedScene" uid="uid://bo1qqbk35bbsp" path="res://DialogueContainer.tscn" id="6_pax2w"]
 [ext_resource type="Script" path="res://Tutorial.gd" id="7_32kts"]
 [ext_resource type="StyleBox" uid="uid://bwnyx0lv1gftl" path="res://Spotlight_Panel.tres" id="7_lj0bl"]
 [ext_resource type="PackedScene" uid="uid://bwx6fag8kd0rw" path="res://UI/NotificationModal.tscn" id="7_myx6d"]
@@ -66,7 +68,11 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="InfoSideBar" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Predictor" parent="MarginContainer/HBoxContainer/PanelContainer/TabContainer" instance=ExtResource("4_30sab")]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
@@ -90,6 +96,10 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
+
+[node name="DialogueContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/PanelContainer2" instance=ExtResource("6_pax2w")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2

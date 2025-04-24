@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://buw4eyphfcei"]
+
+[ext_resource type="Script" path="res://Predictor.gd" id="1_1n6p0"]
+[ext_resource type="PackedScene" uid="uid://bdm8heeojuy7h" path="res://UI/Common/ItemSlot.tscn" id="2_t1hkd"]
+[ext_resource type="PackedScene" uid="uid://cc3evauixtx3l" path="res://UI/Common/ProgressArrow.tscn" id="3_xbx7l"]
+
+[node name="Predictor" type="VBoxContainer"]
+script = ExtResource("1_1n6p0")
+metadata/_tab_index = 0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Parents
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Parent1" parent="HBoxContainer" instance=ExtResource("2_t1hkd")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Parent2" parent="HBoxContainer" instance=ExtResource("2_t1hkd")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ProgressBar" parent="HBoxContainer" instance=ExtResource("3_xbx7l")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 2
+text = "Children"
+
+[node name="Children" type="HFlowContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
