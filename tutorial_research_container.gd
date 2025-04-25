@@ -13,25 +13,35 @@ signal event_emit
 func _ready() -> void:
 	%RedTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"RR"}}))
 	%YellowTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"YY"}}))
-	#%BlueTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"bb"}}))
+	%BlueTulip.set_item(Item.new({"species": "tulip", "genes": {"colour_1":"bb"}}))
 	add_hover_tracker(%RedTulip, 0.5, func (): event_emit.emit({"hover_flower":"red_tulip"}))
 	add_hover_tracker(%YellowTulip, 0.5, func (): event_emit.emit({"hover_flower":"yellow_tulip"}))
-	#add_hover_tracker(%BlueTulip, 0.5, func (): event_emit.emit({"hover_flower":"blue_tulip"}))
+	add_hover_tracker(%BlueTulip, 0.5, func (): event_emit.emit({"hover_flower":"blue_tulip"}))
 	%BreedingPanel.parents_changed.connect(func (data): event_emit.emit({"breeder_parent_changed": data}))
 	%BreedingPanel.new_child.connect(func (data): event_emit.emit({"breeder_new_child": data}))
 	update_tooltips({"known_genes": ["colour_1"]})
 
 func show_red_tulip():
 	%RedTulip.show()
+	%StartingSeedsPanel.show()
 
 func show_yellow_tulip():
 	%YellowTulip.show()
-
+func hide_yellow_tulip():
+	%YellowTulip.hide()
+	
+func show_blue_tulip():
+	%BlueTulip.show()	
+	
 func show_breeder():
 	%BreedingPanel.show()
-
+func hide_breeder():
+	%BreedingPanel.hide()
+	
 func show_rigged_breeder():
 	%RiggedBreedingPanel.show()
+func hide_rigged_breeder():
+	%RiggedBreedingPanel.hide()
 
 func reset():
 	research_contract = null

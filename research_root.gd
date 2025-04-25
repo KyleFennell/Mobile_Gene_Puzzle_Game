@@ -46,7 +46,17 @@ func _on_dialogue_event(value: String):
 			%TutorialResearchContainer.show_yellow_tulip()
 		"show_blue_tulip":
 			%TutorialResearchContainer.show_blue_tulip()
-
+		"hide_yellow_tulip":
+			%TutorialResearchContainer.hide_yellow_tulip()
+		"show_breeder":
+			%TutorialResearchContainer.show_breeder()
+		"hide_breeder":
+			%TutorialResearchContainer.hide_breeder()
+		"show_rigged_breeder":
+			%TutorialResearchContainer.show_rigged_breeder()
+		"hide_rigged_breeder":
+			%TutorialResearchContainer.hide_rigged_breeder()
+			
 func _on_tutorial_research_conatiner_event(value: Dictionary):
 	print("passing on event: ", value)
 	%DialogueContainer.process_event_completion(value)

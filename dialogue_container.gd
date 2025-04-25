@@ -8,6 +8,7 @@ var visible_characters = 0.0
 var current_text = ""
 var text_animation_finished = false
 var eod_reached = false
+var rb_child_counter: int = 0
 
 signal dialogue_event
 
@@ -54,14 +55,10 @@ func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
 	match params[0]:
 		"skip_text_animation":
 			skip_next_textanimation = true
-		"show_flower":
-			match params[1]:
-				"red_tulip":
-					dialogue_event.emit("show_red_tulip")
-				"yellow_tulip":
-					dialogue_event.emit("show_yellow_tulip")
 		"set_state_step":
 			state["step"] = params[1]
+		_: 
+			dialogue_event.emit(params[0])
 
 func finish_text_animation():
 	visible_characters = %TextBox.get_total_character_count()
@@ -90,6 +87,18 @@ func process_event_completion(value: Dictionary):
 			var child = value["breeder_new_child"]
 			if child.genes["colour_1"] == "RY":
 				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_orange_flower_bred")
+				state.step = ""
+		if state.get("step", "") == "breeding_rb":
+			var child = value["breeder_new_child"]
+			if child.genes["colour_1"] == "Rb":
+				rb_child_counter += 1
+			if rb_child_counter == 3:
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_third_rb_flower")
+				state.step = ""
+		if state.get("step", "") == "breeding_blue":
+			var child = value["breeder_new_child"]
+			if child.genes["colour_1"] == "bb":
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_blue_flower_bred")
 				state.step = ""
 
 

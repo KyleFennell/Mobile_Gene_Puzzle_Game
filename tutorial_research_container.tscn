@@ -23,6 +23,7 @@ layout_mode = 2
 
 [node name="StartingSeedsPanel" parent="PanelContainer/VBoxContainer" instance=ExtResource("2_cckmw")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
@@ -55,11 +56,11 @@ size_flags_vertical = 3
 
 [node name="BreedingPanel" parent="PanelContainer/VBoxContainer/Breeders" instance=ExtResource("3_i8l4a")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="RiggedBreedingPanel" parent="PanelContainer/VBoxContainer/Breeders" instance=ExtResource("5_gihpn")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="GoalsRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]

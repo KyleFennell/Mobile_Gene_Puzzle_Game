@@ -5,8 +5,23 @@ extends MarginContainer
 @onready var Children = %Children
 @onready var Progress = %ProgressBar
 
+var rigged_instances: Dictionary = {}
+
 signal parents_changed
-signal child_breed
+signal new_child
+
+class RiggedBreedingInstance:
+	var parent1: Item
+	var parent2: Item
+	var child_list: Array
+	func _init(p1, p2, children):
+		parent1 = p1
+		parent2 = p2
+		child_list = children
+	func has_children_remaining():
+		return child_list.size()
+	func get_next_child() -> Item:
+		return child_list.pop_front()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,6 +30,18 @@ func _ready() -> void:
 	Progress.connect("timeout", breeding_finished)
 	for child in Children.get_children():
 		child.slot_contence_changed.connect(_child_changed)
+	rigged_instances = {
+		"blue_on_three": RiggedBreedingInstance.new(
+			Item.new({"species": "tulip", "genes": {"colour_1": "Rb"}}),
+			Item.new({"species": "tulip", "genes": {"colour_1": "Rb"}}),
+			[
+				Item.new({"species": "tulip", "genes": {"colour_1": "RR"}}),
+				Item.new({"species": "tulip", "genes": {"colour_1": "Rb"}}),
+				Item.new({"species": "tulip", "genes": {"colour_1": "bb"}})
+			]
+		),
+	}
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -58,13 +85,34 @@ func stop_breeding():
 	
 func breeding_finished():
 	var child_slot = get_free_child()
-	var child_item = GeneHelpers.generate_child(Parent1.item, Parent2.item)
+	var child_item = get_rigged_child()
+	if not child_item:
+		print("regular child generated")
+		child_item = GeneHelpers.generate_child(Parent1.item, Parent2.item)
 	child_slot.set_item(child_item)
-	child_breed.emit(child_item)
+	new_child.emit(child_item)
 	if has_free_child():
 		start_breeding()
 	else:
 		stop_breeding()
+
+func get_rigged_child() -> Item:
+	for instance in rigged_instances.values():
+		if instance.has_children_remaining() and valid_rig(instance):
+			print("successfully found rigging instance")
+			return instance.get_next_child()
+	return null
+
+func valid_rig(rig: RiggedBreedingInstance) -> bool:
+	return (
+		(
+			GeneHelpers.genes_match(rig.parent1.genes, Parent1.item.genes) and 
+			GeneHelpers.genes_match(rig.parent2.genes, Parent2.item.genes)
+		) or (
+			GeneHelpers.genes_match(rig.parent1.genes, Parent2.item.genes) and 
+			GeneHelpers.genes_match(rig.parent2.genes, Parent1.item.genes)
+		)
+	)
 
 func has_free_child() -> bool:
 	for child in Children.get_children():

@@ -227,7 +227,7 @@ static func _get_sorter_by_array(arr: Array) -> Callable:
 		return arr.find(a) < arr.find(b)
 	return f
 
-
+# Checks g1 matches g2 but not the other way round i.e. g2 can have more genes that g1
 static func genes_match(g1: Dictionary, g2: Dictionary) -> bool:
 	# checks equivelance accounting for wildcards
 	for gene in g1:
