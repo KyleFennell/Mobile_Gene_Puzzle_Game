@@ -160,4 +160,4 @@ interactions:
           sub_texture: !!int 3
         trim_texture:
           hidden: !!bool false
-          sub_texture: !!int 9
+          sub_texture: !!int 12

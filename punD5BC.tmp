@@ -1,0 +1,83 @@
+[gd_scene load_steps=3 format=3 uid="uid://basuusq5oqmco"]
+
+[ext_resource type="Script" path="res://punnet_square.gd" id="1_7tulo"]
+[ext_resource type="PackedScene" uid="uid://dobn26mhp28mk" path="res://punnet_grid.tscn" id="1_pb6xi"]
+
+[node name="Punnet Square" type="VBoxContainer"]
+script = ExtResource("1_7tulo")
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Species:"
+
+[node name="SpeciesOptions" type="OptionButton" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Genes"
+
+[node name="Gene1Options" type="OptionButton" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Parent 1"
+
+[node name="Parent1Gene1" type="HBoxContainer" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Allele1" type="OptionButton" parent="GridContainer/Parent1Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Allele2" type="OptionButton" parent="GridContainer/Parent1Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Parent 2"
+
+[node name="Parent2Gene1" type="HBoxContainer" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Allele1" type="OptionButton" parent="GridContainer/Parent2Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Allele2" type="OptionButton" parent="GridContainer/Parent2Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Punnet Square:"
+
+[node name="PunnetGrid" parent="." instance=ExtResource("1_pb6xi")]
+unique_name_in_owner = true
+layout_mode = 2

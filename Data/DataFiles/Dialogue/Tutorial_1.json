@@ -1,0 +1,64 @@
+{
+    "replacements":{
+        "genes": "[color=YELLOW_GREEN][u]genes[/u][/color]",
+        "gene": "[color=YELLOW_GREEN][u]gene[/u][/color]",
+        "alleles": "[color=INDIAN_RED][u]alleles[/u][/color]",
+        "allele": "[color=INDIAN_RED][u]allele[/u][/color]"
+    },   
+    "lines": [
+        {
+            "text": "In [color=DARK_GREEN][b]Genome Garden[/b][/color] all living things aredefined by genes makeup that defines everything about them, just like in real life!"
+        },
+        {
+            "text": "We've given these genes are given names based on the primary effects they have on the plant e.g. [code]colour_1[/code] or [code]pigment[/code]. Each gene has two alleles that work together to express the gene. **{{insert analogy about genes and alleles. genres and songs maybe?}}** "    
+        },
+        {
+            "text": "In the case of the [code]colour_1[/code] gene we've discovered the [color=RED][code]R[/code][/color] allele which appears to be responsible for creating a red color!"
+        },
+        {
+            "text": "In each flower, each gene is made up of two alleles. This tulip for example has two [color=RED][code]R[/code][/color] alleles for it's [code]colour_1[/code] gene. Hover over it to take a look!",
+            "view": {
+                "container": "ItemSlot",
+                "item": {
+                    "species": "tulip",
+                    "genes": {
+                        "colour_1": "RR"
+                    }
+                }
+            },
+            "continue_event": "view_hover"
+        },
+        {
+            "text": "When we cross-breed flowers together the child inherits one allele from each parent for each gene. Here's another tulip with [color=GOLD][code]Y[/code][/color] alleles for the [code]colour_1[/code] gene. The [color=GOLD][code]Y[/code][/color] allele is responsible or producing a [color=GOLD]yellow[/color] colour!",
+            "view": {
+                "container": "ItemSlot",
+                "item": {
+                    "species": "tulip",
+                    "genes": {
+                        "colour_1": "YY"
+                    }
+                }
+            },
+            "continue_event": "view_hover"
+        },
+        {
+            "start_event": "show_breeder_and_tutorial_flowers_1",
+            "text": "Here, this a breeding plot. This is what we use to conduct all out cross-breeding experements here. Just put the two flowers you want to cross-breed in those two top slots and let the plot do the work"
+            "continue_event": "breeder_slots"
+        }
+    ]
+}
+- Each flower has two copies of alleles for each gene. This tulip for example has two `R` alleles for it's `colour_1` gene. Hover over it to take a look!
+- When we breed flowers together the child inherits one allele from each parent. Here's another tulip with `Y` alleles for the `colour_1` gene. the `Y` allele is responsible or producing a Yellow colour!
+- Let's try breeding them together and see what happens!
+
+- Woah, and Orange flower! Cool! Different alleles can interact with each other in different ways. The `R` allele and `Y` allele in this case are said to be `Codominant` meaning that both alleles can be expressed at the same time. The orange flower we just bread got a `R` allele from its red parent and a `Y` allele from it's yellow parent. 
+
+- Here's another flower from our nursery. This on has the `b` allele responsible for creating a blue colour. Let's see what happens when we cross-breed this one with a red flower. {{Breed 4 flowers}}
+- Huh. Looks like were only getting red children? Let me take a closer look at them. Interesting! They are all getting a `R` from the red flower and a `b` from the blue, that is they have `colour_1: Rb`. Looks like the red allele's effect is dominant over the blue. 
+- That must be why the `b` allele has a lowercase letter. That normally signifies a *recessive* gene, meaning that its effects are often hidden by others.
+
+- I was kind of hoping that we would be able to make more blue flowers. Since this new generation of flowers still have the genes for blue, let's see what happens if we cross-breed them. {{ Breed until a blue flower. force the first two to be red and at worst the 4th to be blue }}.
+- Aha! There we go. Yup just as I thought. This flower has `colour_1: bb`. It got one `b` from one parent and one from the other. Took a little while though didn't it? Let me show you something.
+- This is a punnet square. If we put one of the parent's genes here, and the other here then we can see what children they can produce! Yup, there we go. Only 1 of the 4 possible children has the `bb` gene. The other 3 have the `R` allele which is dominant over the `b` gene so they appear red.
+- I think that's the basics for now. Here, every now and then we get some research contracts that want us to prove how certain genes interact with each other. I think I have some old ones laying around for you to test your new knowledge on. We'll provide you with some starting flowers with known genes. All you have to do is produce a flower that meets the requirements of the contract. Good luck!

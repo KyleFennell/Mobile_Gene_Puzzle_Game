@@ -1,0 +1,174 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq3ih3ktv3rks"]
+
+[ext_resource type="Script" path="res://mono_gene_punnet.gd" id="1_x8u1p"]
+[ext_resource type="PackedScene" uid="uid://beavlu8lqh76l" path="res://UI/Preview/ChildPreview.tscn" id="2_bujy6"]
+
+[node name="MonoGene" type="MarginContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_x8u1p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Species"
+
+[node name="SpeciesOptions" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="InputGrid" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/InputGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Genes"
+
+[node name="Gene1Options" type="OptionButton" parent="VBoxContainer/InputGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/InputGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Parent 1"
+
+[node name="Parent1Gene1" type="HBoxContainer" parent="VBoxContainer/InputGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Allele1" type="OptionButton" parent="VBoxContainer/InputGrid/Parent1Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Allele2" type="OptionButton" parent="VBoxContainer/InputGrid/Parent1Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="VBoxContainer/InputGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Parent 2"
+
+[node name="Parent2Gene1" type="HBoxContainer" parent="VBoxContainer/InputGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Allele1" type="OptionButton" parent="VBoxContainer/InputGrid/Parent2Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Allele2" type="OptionButton" parent="VBoxContainer/InputGrid/Parent2Gene1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="-" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "\\"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="p1a1" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="p1a2" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="p2a1" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="child1" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("2_bujy6")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="child2" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("2_bujy6")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="p2a2" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="child3" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("2_bujy6")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="child4" parent="VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("2_bujy6")]
+unique_name_in_owner = true
+layout_mode = 2

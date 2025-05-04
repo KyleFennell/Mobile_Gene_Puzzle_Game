@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://sbaua26wbca"]
+[gd_scene load_steps=23 format=4 uid="uid://sbaua26wbca"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1why3"]
 [ext_resource type="StyleBox" uid="uid://boyhwcuefkdjp" path="res://Panel.tres" id="1_prqu4"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://hxenegbtvpvi" path="res://UI/MidStyledButton.tscn" id="3_2puuq"]
 [ext_resource type="PackedScene" uid="uid://buw4eyphfcei" path="res://Predictor.tscn" id="4_30sab"]
 [ext_resource type="PackedScene" uid="uid://cjsbljwalfj35" path="res://UI/InfoPanel.tscn" id="5_4s7q0"]
+[ext_resource type="PackedScene" uid="uid://basuusq5oqmco" path="res://punnet_square.tscn" id="5_5p7yq"]
 [ext_resource type="PackedScene" uid="uid://cr7ewg0pc5j5b" path="res://UI/story_container.tscn" id="5_ltbis"]
 [ext_resource type="PackedScene" uid="uid://dviwwc8r4n8dy" path="res://tutorial_research_container.tscn" id="6_5ptxp"]
 [ext_resource type="PackedScene" uid="uid://bo1qqbk35bbsp" path="res://DialogueContainer.tscn" id="6_pax2w"]
@@ -64,17 +65,23 @@ script = ExtResource("13_2u3nr")
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
-visible = false
+[node name="ToolPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/HBoxContainer/PanelContainer"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/HBoxContainer/ToolPanel"]
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 
-[node name="Predictor" parent="MarginContainer/HBoxContainer/PanelContainer/TabContainer" instance=ExtResource("4_30sab")]
+[node name="Predictor" parent="MarginContainer/HBoxContainer/ToolPanel/TabContainer" instance=ExtResource("4_30sab")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
+
+[node name="Punnet Square" parent="MarginContainer/HBoxContainer/ToolPanel/TabContainer" instance=ExtResource("5_5p7yq")]
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2

@@ -10,6 +10,7 @@ func _ready() -> void:
 	%ResearchContainer.contract_complete.connect(_on_contract_complete)
 	%DialogueContainer.dialogue_event.connect(_on_dialogue_event)
 	%TutorialResearchContainer.event_emit.connect(_on_tutorial_research_conatiner_event)
+	%Predictor.prediction_complete.connect(_on_prediction_complete)
 	
 func _on_research_contract_clicked(research_contract_name: String):
 	if %ResearchContainer.research_contract != null:
@@ -21,7 +22,6 @@ func _on_research_contract_clicked(research_contract_name: String):
 	if research_contract_name in saved_contracts:
 		%ResearchContainer.load_data(saved_contracts[research_contract_name])
 	%ResearchContractList.reload_contract_list({"contract_saves": saved_contracts.keys()})
-
 
 func _on_contract_complete():
 	# naive but it works
@@ -52,11 +52,14 @@ func _on_dialogue_event(value: String):
 			%TutorialResearchContainer.show_breeder()
 		"hide_breeder":
 			%TutorialResearchContainer.hide_breeder()
-		"show_rigged_breeder":
-			%TutorialResearchContainer.show_rigged_breeder()
-		"hide_rigged_breeder":
-			%TutorialResearchContainer.hide_rigged_breeder()
+		"show_predictor":
+			%ToolPanel.show()
 			
 func _on_tutorial_research_conatiner_event(value: Dictionary):
 	print("passing on event: ", value)
 	%DialogueContainer.process_event_completion(value)
+
+func _on_prediction_complete(value: Array):
+	var data = {"predictor_event": value}
+	print("passing on event: ", data)
+	%DialogueContainer.process_event_completion(data)

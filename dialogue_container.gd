@@ -50,13 +50,29 @@ func _on_ez_dialogue_dialogue_generated(response: DialogueResponse) -> void:
 	%TextBox.text = response.text
 	%ContinueButton.text = "continue" if response.choices == [] else response.choices[0]
 
-func _on_ez_dialogue_custom_signal_received(value: Variant) -> void:
-	var params = (value as String).split(",")
+func _on_ez_dialogue_custom_signal_received(value: String) -> void:
+	var params = value.split(",")
 	match params[0]:
 		"skip_text_animation":
 			skip_next_textanimation = true
 		"set_state_step":
 			state["step"] = params[1]
+		"start_timer":
+			var timer = get_tree().create_timer(float(params[1]))
+			timer.timeout.connect(func (): 
+				_on_ez_dialogue_custom_signal_received(value[2])
+				timer.free()
+			)
+		"rb_breeding_timeout":
+			if state.get("step", "") == "breeding_rb":
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_rb_breeding_timeout")
+		"orange_breeding_timeout":
+			if state.get("step", "") == "breeding_orange":
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_orange_breeding_timeout")
+		"orange_prediction_timeout":
+			if state.get("step", "") == "predicting_orange":
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_orange_prediction_timeout")
+
 		_: 
 			dialogue_event.emit(params[0])
 
@@ -100,6 +116,12 @@ func process_event_completion(value: Dictionary):
 			if child.genes["colour_1"] == "bb":
 				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_blue_flower_bred")
 				state.step = ""
+	if "predictor_complete" in value.keys():
+		if state.get("step", "") == "predicting_orange":
+			var parents = value["predictor_complete"]
+			if parents[0].genes["colour_1"] == "RY" and parents[1].genes["colour_1"] == "RY":
+				($EzDialogue as EzDialogue).start_dialogue(dialogue_json, state, "on_orange_prediction")
+
 
 
 func _on_text_animation_finished():

@@ -8,6 +8,8 @@ extends Container
 @onready var Progress = %ProgressBar
 @onready var ChildPreview = preload("res://UI/Preview/ChildPreview.tscn")
 
+signal prediction_complete
+
 func _ready() -> void:
 	Parent1.slot_contence_changed.connect(on_parent_changed)
 	Parent2.slot_contence_changed.connect(on_parent_changed)
@@ -46,3 +48,4 @@ func on_progress_timeout():
 		Children.add_child(child_preview)
 		child_preview.set_item(child.child)
 		child_preview.set_percent(child.chance)
+	prediction_complete.emit([Parent1.item, Parent2.item])

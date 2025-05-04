@@ -10,7 +10,7 @@ var item: Item = null
 var tween = create_tween()
 
 func _ready():
-	Identification.texture = Identification.texture.duplicate()
+	Identification.texture= Identification.texture.duplicate()
 	Events.allele_discovered.connect(update_item_display)
 
 func update_item_display() -> void:

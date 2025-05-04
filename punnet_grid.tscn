@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://dobn26mhp28mk"]
+
+[ext_resource type="Script" path="res://punnet_grid.gd" id="1_icfgu"]
+[ext_resource type="PackedScene" uid="uid://beavlu8lqh76l" path="res://UI/Preview/ChildPreview.tscn" id="2_inuhr"]
+
+[node name="PunnetGrid" type="MarginContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_icfgu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="-" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "\\"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="p1a1" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+horizontal_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="p1a2" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="p2a1" type="Label" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-"
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="child1" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("2_inuhr")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="child2" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("2_inuhr")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="p2a2" type="Label" parent="VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-"
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="child3" parent="VBoxContainer/HBoxContainer3" instance=ExtResource("2_inuhr")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="child4" parent="VBoxContainer/HBoxContainer3" instance=ExtResource("2_inuhr")]
+unique_name_in_owner = true
+layout_mode = 2

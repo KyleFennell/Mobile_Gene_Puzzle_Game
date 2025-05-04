@@ -106,6 +106,10 @@ class _ChildChancePair:
 		self.child = _child
 		self.chance = _chance
 
+static func generate_children(p1: Item, p2: Item) -> Array[Item]:
+	var potential_genes = _generate_potential_genes(p1, p2)
+	var children = _generate_children_from_genes(potential_genes, p1.species)
+	return _convert_children_to_items(children)
 
 static func generate_children_with_percentages(p1: Item, p2: Item) -> Array[_ChildChancePair]:
 	# generates all possible children for the 
@@ -115,7 +119,7 @@ static func generate_children_with_percentages(p1: Item, p2: Item) -> Array[_Chi
 	var potential_genes = _generate_potential_genes(p1, p2)
 	var children = _generate_children_from_genes(potential_genes, p1.species)
 	var children_items: Array[_ChildChancePair]
-	children_items.assign(_convert_children(children).map(
+	children_items.assign(_convert_percent_children_to_child_chance_pairs(children).map(
 		func(child): 
 			child.chance *= remaining_chance
 			return child
@@ -131,7 +135,46 @@ static func _get_combo_children(p1, p2) ->Array[_ChildChancePair]:
 			combo_children.append(_ChildChancePair.new(child, combo.chance))
 	return combo_children
 
+static func _generate_punnet_children_mono(p1: Dictionary, p2: Dictionary) -> Array[Dictionary]:
+	var children: Array[Dictionary] = []
+	if p1["genes"].keys().size() == 1:
+		for a2 in p2["genes"].values()[0]:
+			for a1 in p1["genes"].values()[0]:
+				var new_alleles = "".join([a1,a2])
+				var sorted_alleles = sort_gene(new_alleles, Database.Speciess[p1.species].genome[p1.genes.keys()[0]].alleles)
+				children.append({
+					"item": Item.new({
+						"species": p1.species,
+						"genes": { p1.genes.keys()[0]: sorted_alleles }
+					}),
+					"gene": sorted_alleles
+				})
+	return children
 
+static func _generate_punnet_children_di(p1: Dictionary, p2: Dictionary) -> Array[Dictionary]:
+	var children: Array[Dictionary] = []
+	if p1["genes"].keys().size() == 2:
+		for p2a1 in p2["genes"].values()[0]:
+			for p2a2 in p2["genes"].values()[1]:
+				for p1a1 in p1["genes"].values()[0]:
+					for p1a2 in p1["genes"].values()[1]:
+						var gene_1_alleles = "".join([p1a1, p2a1])
+						var sorted_gene_1_alleles = sort_gene(gene_1_alleles, Database.Speciess[p1.species].genome[p1.genes.keys()[0]].alleles)
+						var gene_2_alleles = "".join([p1a2, p2a2])
+						var sorted_gene_2_alleles = sort_gene(gene_2_alleles, Database.Speciess[p1.species].genome[p1.genes.keys()[1]].alleles)
+						children.append({
+							"item": Item.new({
+								"species": p1.species,
+								"genes": { 
+									p1.genes.keys()[0]: sorted_gene_1_alleles,
+									p1.genes.keys()[1]: sorted_gene_2_alleles
+								}
+							}),
+							"gene": "".join([sorted_gene_1_alleles, sorted_gene_2_alleles])
+						})
+	return children
+	
+		
 static func _generate_potential_genes(p1: Item, p2:Item) -> Dictionary:
 	# generate a list of all combinations for each gene 
 	# e.g. parents: Xx Xx -> [XX, Xx, xx]
@@ -161,8 +204,13 @@ static func _generate_children_from_genes(potential_genes: Dictionary, species: 
 		children = next_children
 	return children
 
+static func _convert_children_to_items(children: Array[Dictionary]) -> Array[Item]:
+	var children_items: Array[Item] = []
+	for child in children:
+		children_items.append(Item.new(child))
+	return children_items
 
-static func _convert_children(children: Array[Dictionary]) -> Array[_ChildChancePair]:
+static func _convert_percent_children_to_child_chance_pairs(children: Array[Dictionary]) -> Array[_ChildChancePair]:
 	# convert children from dict to Items
 	var children_items: Array[_ChildChancePair] = []
 	for child in children:

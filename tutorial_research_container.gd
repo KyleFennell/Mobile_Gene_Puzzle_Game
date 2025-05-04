@@ -37,11 +37,6 @@ func show_breeder():
 	%BreedingPanel.show()
 func hide_breeder():
 	%BreedingPanel.hide()
-	
-func show_rigged_breeder():
-	%RiggedBreedingPanel.show()
-func hide_rigged_breeder():
-	%RiggedBreedingPanel.hide()
 
 func reset():
 	research_contract = null

@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://basuusq5oqmco"]
+
+[ext_resource type="Script" path="res://punnet_square.gd" id="1_7tulo"]
+[ext_resource type="PackedScene" uid="uid://dq3ih3ktv3rks" path="res://mono_gene_punnet.tscn" id="2_qs6y5"]
+[ext_resource type="PackedScene" uid="uid://v6lein6k2qn5" path="res://di_hybrid_punnet_square.tscn" id="3_vrgn2"]
+
+[node name="Punnet Square" type="VBoxContainer"]
+script = ExtResource("1_7tulo")
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Mono <-> DiHybrid"
+
+[node name="MonoToggle" type="CheckButton" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MonoGene" parent="." instance=ExtResource("2_qs6y5")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DiHybrid" parent="." instance=ExtResource("3_vrgn2")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
